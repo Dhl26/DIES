@@ -1,0 +1,182 @@
+[
+  {
+    "id": "35b3a2f0-e2d0-4edd-8979-1df65c0912bf",
+    "hash": "22ccc08a6cbd42382099d0a44ae0ad867a2c16d408abaf75964eeb9b6f7a9f36",
+    "hashes": {
+      "sha256": "22ccc08a6cbd42382099d0a44ae0ad867a2c16d408abaf75964eeb9b6f7a9f36",
+      "sha1": "e1d0b0fcc0e8f5301d5c44812f76e7b21865394a",
+      "md5": "58dd492567807c58bf9a9d79feb7067d"
+    },
+    "fileName": "evidence_FIR2026_042.txt",
+    "fileSize": 31,
+    "mimeType": "text/plain",
+    "storedAs": "22ccc08a6cbd42382099d0a44ae0ad867a2c16d408abaf75964eeb9b6f7a9f36.txt",
+    "metadata": "No description",
+    "category": "Mobile Device",
+    "tags": [
+      "mobile"
+    ],
+    "caseId": "dd0017dc-374a-4613-8520-4b42686f69ed",
+    "status": "Analyzed",
+    "uploadedBy": "admin",
+    "uploaderRole": "Admin",
+    "transactionHash": "0x91c608523fd388d535efff383054e549c5f7936be64a5a131f130f9af010f89e",
+    "timestamp": "2026-03-05T23:03:10.107Z",
+    "notes": [],
+    "custodyLog": [
+      {
+        "action": "INITIAL_UPLOAD",
+        "by": "admin",
+        "role": "Admin",
+        "timestamp": "2026-03-05T23:03:10.112Z",
+        "notes": "No description"
+      },
+      {
+        "action": "STATUS_CHANGED",
+        "by": "admin",
+        "role": "Admin",
+        "timestamp": "2026-03-05T23:03:50.035Z",
+        "notes": "Status: Collected → Processing"
+      },
+      {
+        "action": "TRANSFERRED",
+        "by": "admin",
+        "role": "Admin",
+        "timestamp": "2026-03-05T23:05:07.978Z",
+        "notes": "Transferred to Forensic Lab for processing."
+      },
+      {
+        "action": "STATUS_CHANGED",
+        "by": "admin",
+        "role": "Admin",
+        "timestamp": "2026-03-05T23:06:39.348Z",
+        "notes": "Status: Processing → Analyzed"
+      },
+      {
+        "action": "STATUS_CHANGED",
+        "by": "admin",
+        "role": "Admin",
+        "timestamp": "2026-03-05T23:06:42.481Z",
+        "notes": "Status: Analyzed → Processing"
+      },
+      {
+        "action": "EXAMINED",
+        "by": "admin",
+        "role": "Admin",
+        "timestamp": "2026-03-05T23:06:58.434Z",
+        "notes": ""
+      },
+      {
+        "action": "STATUS_CHANGED",
+        "by": "admin",
+        "role": "Admin",
+        "timestamp": "2026-03-05T23:07:03.524Z",
+        "notes": "Status: Processing → Analyzed"
+      },
+      {
+        "action": "INTEGRITY_CHECK",
+        "by": "admin",
+        "role": "Admin",
+        "timestamp": "2026-03-05T23:07:20.567Z",
+        "notes": ""
+      },
+      {
+        "action": "STATUS_CHANGED",
+        "by": "admin",
+        "role": "Admin",
+        "timestamp": "2026-03-05T23:07:21.821Z",
+        "notes": "Status: Analyzed → Court-Ready"
+      },
+      {
+        "action": "INTEGRITY_CHECK",
+        "by": "mtech25",
+        "role": "Admin",
+        "timestamp": "2026-03-06T04:48:19.789Z",
+        "notes": "All hashes match — file intact"
+      },
+      {
+        "action": "DOWNLOADED",
+        "by": "mtech25",
+        "role": "Admin",
+        "timestamp": "2026-03-06T04:48:29.185Z",
+        "notes": ""
+      },
+      {
+        "action": "DOWNLOADED",
+        "by": "admin123",
+        "role": "Admin",
+        "timestamp": "2026-03-26T16:30:16.749Z",
+        "notes": ""
+      },
+      {
+        "action": "STATUS_CHANGED",
+        "by": "admin123",
+        "role": "Admin",
+        "timestamp": "2026-03-26T16:30:32.659Z",
+        "notes": "Status: Court-Ready → Archived"
+      },
+      {
+        "action": "STATUS_CHANGED",
+        "by": "admin123",
+        "role": "Admin",
+        "timestamp": "2026-03-26T16:30:34.666Z",
+        "notes": "Status: Archived → Released"
+      },
+      {
+        "action": "STATUS_CHANGED",
+        "by": "admin123",
+        "role": "Admin",
+        "timestamp": "2026-03-26T16:30:36.308Z",
+        "notes": "Status: Released → Analyzed"
+      },
+      {
+        "action": "INTEGRITY_CHECK",
+        "by": "admin123",
+        "role": "Admin",
+        "timestamp": "2026-03-26T17:28:22.459Z",
+        "notes": "All hashes match — file intact"
+      }
+    ]
+  },
+  {
+    "id": "ab0b94a5-c35c-4186-a79b-4f4b9fb88a6f",
+    "hash": "11a47d1a328666e0d002572252a4c8e14adcd0c86b9f738724d6a1efb2f18c63",
+    "hashes": {
+      "sha256": "11a47d1a328666e0d002572252a4c8e14adcd0c86b9f738724d6a1efb2f18c63",
+      "sha1": "fb90e5d8b88805304f5407152d076210f1221f1d",
+      "md5": "0a1e78456f4a0cc3d5b0917196c48356"
+    },
+    "fileName": "project-shree-blood.png",
+    "fileSize": 877238,
+    "mimeType": "image/png",
+    "storedAs": "11a47d1a328666e0d002572252a4c8e14adcd0c86b9f738724d6a1efb2f18c63.png",
+    "metadata": "[HANDOVER FORM]\r\nAuthority: test\r\nFIR/Case No: 55\r\nDelivered By: test (ID: 555) via Messenger\r\nDocs Included: Forwarding Letter\r\nRemarks: test note",
+    "category": "Mobile Data",
+    "tags": [
+      "test"
+    ],
+    "caseId": null,
+    "status": "Processing",
+    "uploadedBy": "mtech25",
+    "uploaderRole": "Admin",
+    "transactionHash": "0x9e99410c2789162b54883b5d1977a7b8a884b8ab9285a10067d535812b608909",
+    "timestamp": "2026-03-06T04:54:03.609Z",
+    "notes": [],
+    "custodyLog": [
+      {
+        "action": "INITIAL_UPLOAD",
+        "by": "mtech25",
+        "role": "Admin",
+        "timestamp": "2026-03-06T04:54:03.609Z",
+        "notes": "[HANDOVER FORM]\r\nAuthority: test\r\nFIR/Case No: 55\r\nDelivered By: test (ID: 555) via Messenger\r\nDocs Included: Forwarding Letter\r\nRemarks: test note"
+      },
+      {
+        "action": "STATUS_CHANGED",
+        "by": "mtech25",
+        "role": "Admin",
+        "timestamp": "2026-03-06T04:56:36.411Z",
+        "notes": "Status: Collected → Processing"
+      }
+    ]
+  }
+]

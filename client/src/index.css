@@ -1,0 +1,224 @@
+/* Tailwind is disabled to allow Vuexy raw HTML structure to work */
+
+.swal2-container {
+  z-index: 9999 !important;
+}
+
+.nav-tabs {
+  margin-bottom: 0.5rem;
+}
+
+/* Improve tabs appearance to match Vuexy premium feel */
+.nav-tabs .nav-link {
+  color: #6e6b7b;
+  font-weight: 500;
+  border: none !important;
+  border-bottom: 2px solid transparent !important;
+  padding: 0.8rem 1.2rem;
+  transition: all 0.2s ease-in-out;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.nav-tabs .nav-link.active {
+  color: #7367f0 !important;
+  background-color: transparent !important;
+  border-bottom: 2px solid #7367f0 !important;
+}
+
+.nav-tabs .nav-link:hover:not(.active) {
+  color: #7367f0;
+  border-bottom: 2px solid rgba(115, 103, 240, 0.1) !important;
+}
+
+/* Timeline improvements for Chain of Custody */
+.timeline .timeline-item .timeline-point {
+  left: -0.35rem;
+  top: 0.75rem;
+  width: 0.7rem;
+  height: 0.7rem;
+  border: 2px solid #fff;
+}
+
+.timeline .timeline-item {
+  padding-left: 1.5rem;
+}
+
+.timeline .timeline-event {
+  min-height: auto;
+  padding-bottom: 1.5rem;
+}
+
+.timeline-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Premium Form Selection & Options */
+.form-select, .form-control {
+  border: 1px solid #dbdade;
+  border-radius: 0.375rem;
+  padding: 0.522rem 0.875rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  background-color: #fff;
+  color: #6e6b7b;
+}
+
+.form-select:focus, .form-control:focus {
+  border-color: #7367f0 !important;
+  box-shadow: 0 0.125rem 0.625rem 0 rgba(115,103,240,0.3) !important;
+  outline: 0;
+}
+
+/* Standard Select Appearance */
+.form-select {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%236e6b7b' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 16px 12px;
+  appearance: none;
+}
+
+/* Custom Checkable Options (Cards) */
+.custom-option {
+  border: 1px solid #dbdade;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  height: 100%;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  background: #fff;
+}
+
+.custom-option:hover {
+  border-color: #7367f0;
+  box-shadow: 0 4px 12px 0 rgba(115,103,240,0.12);
+  transform: translateY(-2px);
+}
+
+.custom-option.checked {
+  border-color: #7367f0 !important;
+  background-color: rgba(115, 103, 240, 0.04) !important;
+  box-shadow: 0 2px 6px 0 rgba(115,103,240,0.2) !important;
+}
+
+.custom-option.checked .custom-option-title {
+  color: #7367f0 !important;
+  font-weight: 700;
+}
+
+.custom-option.checked i {
+  color: #7367f0 !important;
+  transform: scale(1.1);
+  transition: transform 0.2s;
+}
+
+/* Form Radios & Checks */
+.form-check-input:checked {
+  background-color: #7367f0;
+  border-color: #7367f0;
+}
+
+.form-check-input:focus {
+  border-color: #7367f0;
+  box-shadow: 0 0 0 0.25rem rgba(115,103,240,0.15);
+}
+
+/* ── Custom Selection Groups (Investigative System Style) ── */
+.status-selection-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.status-btn {
+  border: 1px solid #dbdade;
+  background: #ffffff;
+  padding: 0.75rem 1.25rem;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  cursor: pointer;
+  color: #5d596c;
+  font-weight: 500;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.status-btn:hover:not(.active) {
+  border-color: #7367f0;
+  color: #7367f0;
+  background: rgba(115, 103, 240, 0.04);
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px 0 rgba(115,103,240,0.1);
+}
+
+.status-btn.active {
+  background: #7367f0;
+  border-color: #7367f0;
+  color: #fff;
+  font-weight: 600;
+  box-shadow: 0 5px 15px 0 rgba(115,103,240,0.25);
+  transform: scale(1.05);
+}
+
+.status-btn i {
+  font-size: 1.1rem;
+  transition: transform 0.25s ease;
+}
+
+.status-btn.active i {
+  color: #fff;
+  transform: rotate(360deg);
+}
+
+/* Scrollbar styling for a cleaner look */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f8f7fa;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #dbdade;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #7367f080;
+}
+
+/* Dropdown Menu styling */
+.dropdown-menu {
+  border: 0;
+  box-shadow: 0 0.5rem 1.5rem 0 rgba(0,0,0,0.1);
+  border-radius: 0.5rem;
+  padding: 0.5rem 0;
+}
+
+.dropdown-item:hover, .dropdown-item:focus {
+  background-color: rgba(115,103,240,0.08);
+  color: #7367f0;
+}
+
+.dropdown-item.active, .dropdown-item:active {
+  background-color: #7367f0;
+  color: #fff;
+}
+
+/* Labels */
+.form-label {
+  color: #5d596c;
+  font-weight: 500;
+  margin-bottom: 0.4rem;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}

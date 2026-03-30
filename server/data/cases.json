@@ -1,0 +1,24 @@
+[
+  {
+    "id": "dd0017dc-374a-4613-8520-4b42686f69ed",
+    "caseNumber": "FIR-2026/042",
+    "title": "Cyber Investigation Sector 4",
+    "description": "Testing blockchain integrity handover",
+    "priority": "Medium",
+    "status": "Open",
+    "createdBy": "admin",
+    "createdAt": "2026-03-05T23:02:50.830Z",
+    "updatedAt": "2026-03-26T17:23:55.596Z"
+  },
+  {
+    "id": "2b7c3cd5-3ec6-4d86-84fd-862b786b2493",
+    "caseNumber": "CASE-MN7OS0PA",
+    "title": "Test Case",
+    "description": "",
+    "priority": "Low",
+    "status": "Open",
+    "createdBy": "admin123",
+    "createdAt": "2026-03-26T16:28:05.134Z",
+    "updatedAt": "2026-03-26T16:28:05.134Z"
+  }
+]
