@@ -1615,5 +1615,49 @@
     "username": "admin123",
     "role": "Admin",
     "ip": "::1"
+  },
+  {
+    "id": "0e32060a-7b1c-45cc-98b0-ce7d29b6ae98",
+    "timestamp": "2026-04-05T18:12:38.953Z",
+    "action": "USER_LOGIN",
+    "username": "admin123",
+    "role": "Admin",
+    "ip": "::1"
+  },
+  {
+    "id": "5ad56fa6-5b6d-4605-b12a-4a9c37f3073f",
+    "timestamp": "2026-04-05T18:12:54.180Z",
+    "action": "CASE_CREATED",
+    "username": "admin123",
+    "role": "Admin",
+    "ip": "unknown",
+    "caseId": "ecaee033-2a21-4d3a-b72c-de76e2349081",
+    "caseNumber": "CASE-MNM2XC0O"
+  },
+  {
+    "id": "984662cd-ee58-4d14-aff6-0e32e61282eb",
+    "timestamp": "2026-04-05T18:16:31.567Z",
+    "action": "USER_LOGIN",
+    "username": "admin123",
+    "role": "Admin",
+    "ip": "::1"
+  },
+  {
+    "id": "aced7d42-675a-4e28-9d0b-0e39588e4cc2",
+    "timestamp": "2026-04-05T18:24:33.585Z",
+    "action": "CASE_UPDATED",
+    "username": "admin123",
+    "role": "Admin",
+    "ip": "unknown",
+    "caseId": "dd0017dc-374a-4613-8520-4b42686f69ed"
+  },
+  {
+    "id": "a9901529-4a47-49e9-9b1f-6c2af4f48419",
+    "timestamp": "2026-04-05T18:24:34.723Z",
+    "action": "CASE_UPDATED",
+    "username": "admin123",
+    "role": "Admin",
+    "ip": "unknown",
+    "caseId": "dd0017dc-374a-4613-8520-4b42686f69ed"
   }
 ]

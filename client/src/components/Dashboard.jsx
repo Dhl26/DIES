@@ -36,7 +36,7 @@ const Dashboard = () => {
     return (
         <div className="row">
             {/* Welcome banner */}
-            <div className="col-12 mb-6">
+            <div className="col-12 mb-4">
                 <div className="card bg-primary text-white">
                     <div className="card-body p-5">
                         <div className="d-flex align-items-center justify-content-between">
@@ -48,6 +48,22 @@ const Dashboard = () => {
                                 <span className="badge bg-white text-primary rounded-pill p-2 px-3 fw-bold">DEIS v2.0 - Active</span>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* Hyperledger Status Alert */}
+            <div className="col-12 mb-6">
+                <div className="alert d-flex align-items-center" role="alert" style={{ border: '1px solid #71dd37', backgroundColor: 'rgba(113, 221, 55, 0.1)' }}>
+                    <span className="badge badge-center rounded-pill bg-success p-3 me-3 text-white">
+                      <i className="icon-base ti tabler-shield-check fs-5"></i>
+                    </span>
+                    <div className="d-flex flex-column ps-1">
+                        <h6 className="alert-heading d-flex align-items-center fw-bold mb-1" style={{ color: '#53a626' }}>
+                            <span className="pulse-dot me-2" style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#71dd37', display: 'inline-block' }}></span>
+                            Hyperledger Fabric is connected and working successfully
+                        </h6>
+                        <span style={{ color: '#53a626' }}>Your private blockchain network is active. All evidence uploaded is being cryptographically anchored to the immutable ledger.</span>
                     </div>
                 </div>
             </div>

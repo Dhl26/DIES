@@ -28872,3 +28872,29 @@ body:not(.modal-open) .layout-content-navbar .layout-navbar {
   --bs-footer-brand-hover-color: color-mix(in sRGB, var(--bs-pure-black) 84%, var(--bs-dark-contrast));
   --bs-footer-link-hover-color: color-mix(in sRGB, var(--bs-pure-black) 84%, var(--bs-dark-contrast));
 }
+
+#deliveryModeDrawer .avatar .avatar-initial {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #00bad1;
+    color: var(--bs-white);
+    font-size: var(--bs-avatar-initial);
+    font-weight: 500;
+    inset: 0;
+    text-transform: uppercase;
+}
+
+#categoryDrawer .avatar .avatar-initial {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #7367f0;
+    color: var(--bs-white);
+    font-size: var(--bs-avatar-initial);
+    font-weight: 500;
+    inset: 0;
+    text-transform: uppercase;
+}
