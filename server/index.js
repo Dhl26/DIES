@@ -610,19 +610,30 @@ app.get('/evidence/:hash/verify-integrity',
                 currentHashes.sha1 === entry.hashes.sha1 &&
                 currentHashes.md5 === entry.hashes.md5;
 
+            let chainVerified = false;
+            try {
+                const ev = await contract.getEvidence(req.params.hash);
+                if (ev && ev.fileHash === currentHashes.sha256) {
+                    chainVerified = true;
+                }
+            } catch (e) {
+                console.log("[DEIS] Blockchain verify failed:", e.message);
+            }
+
             entry.custodyLog.push({
                 action: 'INTEGRITY_CHECK',
                 by: req.user.username,
                 role: req.user.role,
                 timestamp: new Date().toISOString(),
-                notes: intact ? 'All hashes match — file intact' : 'INTEGRITY VIOLATION DETECTED',
+                notes: intact ? (chainVerified ? 'All hashes match — verified on blockchain' : 'File intact but blockchain verify failed') : 'INTEGRITY VIOLATION DETECTED',
             });
             writeJSON(FILES.evidence, registry);
 
-            logAudit('INTEGRITY_CHECK', req.user, { evidenceHash: req.params.hash, intact });
+            logAudit('INTEGRITY_CHECK', req.user, { evidenceHash: req.params.hash, intact, chainVerified });
 
             res.json({
                 intact,
+                chainVerified,
                 stored: entry.hashes,
                 current: currentHashes,
                 checkedAt: new Date().toISOString(),

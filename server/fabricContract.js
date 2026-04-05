@@ -9,8 +9,10 @@ const channelName = process.env.CHANNEL_NAME || 'mychannel';
 const chaincodeName = process.env.CHAINCODE_NAME || 'evidence-contract';
 const mspId = process.env.MSP_ID || 'Org1MSP';
 
-// Path to crypto materials.
-const cryptoPath = process.env.CRYPTO_PATH || path.resolve(__dirname, '..', 'fabric-backend', 'crypto-config');
+const os = require('os');
+
+// Path to native WSL crypto materials dynamically!
+const cryptoPath = process.env.CRYPTO_PATH || path.join(os.homedir(), 'fabric-network', 'fabric-samples', 'test-network', 'organizations', 'peerOrganizations', 'org1.example.com');
 const tlsCertPath = process.env.TLS_CERT_PATH || path.resolve(cryptoPath, 'peers', 'peer0.org1.example.com', 'tls', 'ca.crt');
 const keyDirectoryPath = process.env.KEY_DIR_PATH || path.resolve(cryptoPath, 'users', 'User1@org1.example.com', 'msp', 'keystore');
 const certPath = process.env.CERT_PATH || path.resolve(cryptoPath, 'users', 'User1@org1.example.com', 'msp', 'signcerts', 'cert.pem');

@@ -14,7 +14,8 @@ class EvidenceContract extends Contract {
             throw new Error(`Evidence with hash ${fileHash} already exists`);
         }
 
-        const timestamp = new Date().getTime().toString();
+        const txDate = ctx.stub.getTxTimestamp();
+        const timestamp = (txDate.seconds.low * 1000 + txDate.nanos / 1000000).toString();
         const clientIdentity = ctx.clientIdentity.getID();
 
         // Create root custody node ID
@@ -50,7 +51,8 @@ class EvidenceContract extends Contract {
             throw new Error(`Parent node ${parentId} does not exist`);
         }
 
-        const timestamp = new Date().getTime().toString();
+        const txDate = ctx.stub.getTxTimestamp();
+        const timestamp = (txDate.seconds.low * 1000 + txDate.nanos / 1000000).toString();
         const clientIdentity = ctx.clientIdentity.getID();
 
         const nodeId = crypto.createHash('sha256').update(parentId + clientIdentity + action + timestamp).digest('hex');
