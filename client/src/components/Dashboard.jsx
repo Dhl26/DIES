@@ -152,7 +152,7 @@ const Dashboard = () => {
                                 <div className="card-body">
                                     <ul className="p-0 m-0">
                                         {Object.entries(stats.evidence.byStatus || {}).filter(([, v]) => v > 0).map(([s, count]) => (
-                                            <li key={s} className="d-flex mb-3 pb-1 border-bottom border-dashed align-items-center">
+                                            <li key={s} className="d-flex mb-4 align-items-center">
                                                 <div className="badge bg-label-primary rounded p-2 me-3"><i className="icon-base ti tabler-chart-pie-2 ti-sm"></i></div>
                                                 <div className="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
                                                     <div className="me-2">
@@ -177,7 +177,7 @@ const Dashboard = () => {
                                 <div className="card-body">
                                     <ul className="p-0 m-0">
                                         {Object.entries(stats.evidence.byCategory || {}).sort((a, b) => b[1] - a[1]).slice(0, 6).map(([cat, count]) => (
-                                            <li key={cat} className="d-flex mb-3 pb-1 border-bottom border-dashed align-items-center">
+                                            <li key={cat} className="d-flex mb-4 align-items-center">
                                                 <div className="badge bg-label-info rounded p-2 me-3"><i className="icon-base ti tabler-category ti-sm"></i></div>
                                                 <div className="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
                                                     <div className="me-2">

@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const multer = require('multer');
 const crypto = require('crypto');
-const { ethers } = require('ethers');
+// Hyperledger Fabric Adapter is imported below
 const path = require('path');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
@@ -26,18 +26,11 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage, limits: { fileSize: 100 * 1024 * 1024 } });
 
 // ═══════════════════════════════════════════════════════════
-//  BLOCKCHAIN SETUP
+//  BLOCKCHAIN SETUP (Hyperledger Fabric)
 // ═══════════════════════════════════════════════════════════
-const provider = new ethers.providers.JsonRpcProvider("http://127.0.0.1:8545");
-const loadedKey = process.env.PRIVATE_KEY ? process.env.PRIVATE_KEY.trim() : "";
-const privateKey = loadedKey || "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80";
-const wallet = new ethers.Wallet(privateKey, provider);
-const contractAddress = process.env.CONTRACT_ADDRESS ? process.env.CONTRACT_ADDRESS.trim() : "";
-const artifact = require('./abi.json');
-const contract = new ethers.Contract(contractAddress, artifact.abi, wallet);
+const contract = require('./fabricContract');
 
-console.log(`[DEIS] Contract: ${contractAddress}`);
-console.log(`[DEIS] Wallet:   ${wallet.address}`);
+console.log(`[DEIS] Hyperledger Fabric Adapter Loaded`);
 
 // ═══════════════════════════════════════════════════════════
 //  DATA LAYER (JSON file-based persistence)
@@ -50,6 +43,13 @@ const FILES = {
     evidence: path.resolve(DATA_DIR, 'evidence.json'),
     cases: path.resolve(DATA_DIR, 'cases.json'),
     auditLog: path.resolve(DATA_DIR, 'audit-log.json'),
+    permissions: path.resolve(DATA_DIR, 'permissions.json'),
+};
+
+const DEFAULT_PERMISSIONS = {
+    'Admin': ['Dashboard', 'View Cases', 'Create Case', 'Close Case', 'Update Case', 'Upload Evidence', 'Download Evidence', 'Change Status', 'View Report', 'View Audit Logs', 'User Management', 'Verify Evidence'],
+    'Case Agent': ['Dashboard', 'View Cases', 'Create Case', 'Update Case', 'Upload Evidence', 'Download Evidence', 'View Report', 'Verify Evidence'],
+    'Evidence Custodian': ['Dashboard', 'View Cases', 'Download Evidence', 'Change Status', 'Verify Evidence']
 };
 
 const readJSON = (filePath, fallback = []) => {
@@ -119,7 +119,7 @@ const authorize = (...roles) => (req, res, next) => {
 //  ROUTES: HEALTH
 // ═══════════════════════════════════════════════════════════
 app.get('/', (req, res) => {
-    res.json({ status: 'ok', service: 'DEIS Backend v2.1', contract: contractAddress, features: ['multi-hash', 'case-management', 'audit-log', 'evidence-workflow', 'report-gen'] });
+    res.json({ status: 'ok', service: 'DEIS Backend v2.1 (Fabric Edition)', blockchain: 'Hyperledger Fabric', features: ['multi-hash', 'case-management', 'audit-log', 'evidence-workflow', 'report-gen'] });
 });
 
 // ═══════════════════════════════════════════════════════════
@@ -144,6 +144,41 @@ app.post('/register', authenticate, authorize('Admin'), async (req, res) => {
         console.error("[DEIS] Reg error:", err);
         res.status(500).json({ error: 'Registration failed' });
     }
+});
+
+app.get('/users', authenticate, authorize('Admin'), (req, res) => {
+    const users = readJSON(FILES.users).map(u => ({ username: u.username, role: u.role, createdAt: u.createdAt }));
+    res.json(users);
+});
+
+app.put('/users/role', authenticate, authorize('Admin'), (req, res) => {
+    const { username, role } = req.body;
+    let users = readJSON(FILES.users);
+    const uIdx = users.findIndex(u => u.username === username);
+    if (uIdx === -1) return res.status(404).json({ error: 'User not found' });
+    users[uIdx].role = role;
+    writeJSON(FILES.users, users);
+    res.json({ message: 'User role updated successfully' });
+});
+
+// ═══════════════════════════════════════════════════════════
+//  ROUTES: DYNAMIC PERMISSIONS
+// ═══════════════════════════════════════════════════════════
+app.get('/permissions', authenticate, (req, res) => {
+    const perms = readJSON(FILES.permissions, DEFAULT_PERMISSIONS);
+    // If empty or missing, populate defaults
+    if (Object.keys(perms).length === 0) {
+        writeJSON(FILES.permissions, DEFAULT_PERMISSIONS);
+        return res.json(DEFAULT_PERMISSIONS);
+    }
+    res.json(perms);
+});
+
+app.put('/permissions', authenticate, authorize('Admin'), (req, res) => {
+    const newPerms = req.body;
+    writeJSON(FILES.permissions, newPerms);
+    logAudit('PERMISSIONS_UPDATED', req.user, { updated: true });
+    res.json({ message: 'Permissions successfully updated' });
 });
 
 app.post('/verify-password', authenticate, async (req, res) => {

@@ -50,7 +50,13 @@ const EvidenceDetail = () => {
 
     const headers = { 'Authorization': `Bearer ${user.token}` };
 
-    useEffect(() => { fetchDetail(); fetchCases(); }, [hash]);
+    useEffect(() => { 
+        fetchDetail(); 
+        fetchCases(); 
+        if (['Case Agent', 'Admin'].includes(user?.role)) {
+            handleGenerateReport();
+        }
+    }, [hash, user?.role]);
 
     const fetchDetail = async () => {
         try {
@@ -66,6 +72,35 @@ const EvidenceDetail = () => {
     };
 
     const handleDownload = async () => {
+        const { value: password } = await Swal.fire({
+            title: 'Confirm Download',
+            text: `Enter your password to authorize download of evidence file.`,
+            input: 'password',
+            inputPlaceholder: 'Enter your password',
+            inputAttributes: { autocapitalize: 'off', autocorrect: 'off' },
+            showCancelButton: true,
+            confirmButtonText: 'Confirm',
+            confirmButtonColor: '#7367f0',
+            cancelButtonColor: '#adb5bd',
+            showLoaderOnConfirm: true,
+            preConfirm: async (pass) => {
+                try {
+                    const res = await authFetch('http://localhost:3001/verify-password', {
+                        method: 'POST',
+                        body: JSON.stringify({ password: pass }),
+                    });
+                    if (res.ok) return true;
+                    if (res.status === 401) throw new Error('Invalid credentials');
+                    throw new Error('Verification failed');
+                } catch (error) {
+                    Swal.showValidationMessage(error.message);
+                }
+            },
+            allowOutsideClick: () => !Swal.isLoading()
+        });
+
+        if (!password) return;
+
         setDownloading(true);
         try {
             const res = await fetch(`http://localhost:3001/evidence/${hash}/download`, { headers });
@@ -263,11 +298,6 @@ const EvidenceDetail = () => {
                                 {canDownload && (
                                     <button onClick={handleDownload} disabled={downloading} className="btn btn-label-primary">
                                         {downloading ? <><span className="spinner-border spinner-border-sm me-2"></span>Downloading</> : <><i className="icon-base ti tabler-download me-2"></i>Download</>}
-                                    </button>
-                                )}
-                                {canReport && (
-                                    <button onClick={handleGenerateReport} disabled={reportLoading} className="btn btn-label-info">
-                                        {reportLoading ? <span className="spinner-border spinner-border-sm"></span> : <><i className="icon-base ti tabler-report me-2"></i>Report</>}
                                     </button>
                                 )}
                             </div>
@@ -548,15 +578,152 @@ const EvidenceDetail = () => {
             {/* Report */}
             {report && (
                 <div className="col-12 mb-4">
-                    <div className="card border-primary">
-                        <div className="card-header border-bottom d-flex align-items-center gap-2">
-                            <i className="icon-base ti tabler-report text-primary ti-md"></i>
-                            <h6 className="card-title mb-0">Evidence Report</h6>
+                    <div className="card border-primary shadow-sm mb-4">
+                        <div className="card-header border-bottom d-flex align-items-center justify-content-between bg-primary-subtle py-3">
+                            <div className="d-flex align-items-center gap-2">
+                                <i className="icon-base ti tabler-file-report text-primary fs-4"></i>
+                                <h5 className="card-title mb-0 text-primary fw-bold">{report.title}</h5>
+                            </div>
+                            <span className="badge bg-primary rounded-pill px-3 py-2 fs-6">{report.standard}</span>
                         </div>
-                        <div className="card-body">
-                            <pre className="bg-light border rounded p-3 small" style={{ whiteSpace: 'pre-wrap', maxHeight: '40vh', overflow: 'auto', wordBreak: 'break-word' }}>
-                                {JSON.stringify(report, null, 2)}
-                            </pre>
+                        <div className="card-body p-4 bg-lighter">
+                            
+                            <div className="row g-4">
+                                {/* Metadata */}
+                                <div className="col-12 col-md-4">
+                                    <div className="card h-100 border-0 shadow-sm rounded-3">
+                                        <div className="card-body">
+                                            <h6 className="text-uppercase small fw-bold text-muted mb-3 d-flex align-items-center gap-2">
+                                                <i className="icon-base ti tabler-user"></i> Report Metadata
+                                            </h6>
+                                            <div className="mb-3">
+                                                <label className="small text-muted d-block mb-1">Generated At</label>
+                                                <span className="fw-medium">{new Date(report.generatedAt).toLocaleString()}</span>
+                                            </div>
+                                            <div className="mb-3">
+                                                <label className="small text-muted d-block mb-1">Analyst</label>
+                                                <span className="fw-medium">{report.generatedBy}</span> <span className="badge bg-label-secondary ms-1">{report.generatedByRole}</span>
+                                            </div>
+                                            {report.case && (
+                                                <div className="mb-0">
+                                                    <label className="small text-muted d-block mb-1">Case Reference</label>
+                                                    <span className="fw-bold text-primary">{report.case.caseNumber}</span>
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Evidence Overview */}
+                                <div className="col-12 col-md-4">
+                                    <div className="card h-100 border-0 shadow-sm rounded-3">
+                                        <div className="card-body">
+                                            <h6 className="text-uppercase small fw-bold text-muted mb-3 d-flex align-items-center gap-2">
+                                                <i className="icon-base ti tabler-file-info"></i> Evidence Overview
+                                            </h6>
+                                            {report.evidence && (
+                                                <>
+                                                    <div className="mb-3 text-truncate">
+                                                        <label className="small text-muted d-block mb-1">File Name</label>
+                                                        <span className="fw-medium" title={report.evidence.fileName}>{report.evidence.fileName}</span>
+                                                    </div>
+                                                    <div className="row g-3 mb-0">
+                                                        <div className="col-6">
+                                                            <label className="small text-muted d-block mb-1">Category</label>
+                                                            <span className="badge bg-label-info text-wrap">{report.evidence.category}</span>
+                                                        </div>
+                                                        <div className="col-6">
+                                                            <label className="small text-muted d-block mb-1">Status</label>
+                                                            <span className={`badge ${report.evidence.status === 'Court-Ready' ? 'bg-label-success' : 'bg-label-warning'} text-wrap`}>{report.evidence.status}</span>
+                                                        </div>
+                                                    </div>
+                                                </>
+                                            )}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Integrity Status */}
+                                <div className="col-12 col-md-4">
+                                    <div className="card h-100 border-0 shadow-sm rounded-3">
+                                        <div className="card-body d-flex flex-column justify-content-center text-center py-4">
+                                            <div className="mb-3">
+                                                <div className={`avatar avatar-xl mx-auto rounded-circle d-flex align-items-center justify-content-center ${report.integrityStatus === 'INTACT' ? 'bg-label-success' : 'bg-label-danger'}`} style={{ width: '80px', height: '80px' }}>
+                                                    <i className={`icon-base ti ${report.integrityStatus === 'INTACT' ? 'tabler-shield-check text-success' : 'tabler-shield-x text-danger'}`} style={{ fontSize: '2.5rem' }}></i>
+                                                </div>
+                                            </div>
+                                            <h4 className={`mb-1 fw-bold ${report.integrityStatus === 'INTACT' ? 'text-success' : 'text-danger'}`}>{report.integrityStatus}</h4>
+                                            <span className="text-muted small">Validated across {report.totalCustodyEvents} recorded events</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Cryptographic Hashes */}
+                                <div className="col-12 col-lg-6">
+                                    <div className="card h-100 border-0 shadow-sm rounded-3">
+                                        <div className="card-body">
+                                            <h6 className="text-uppercase small fw-bold text-muted mb-3 d-flex align-items-center gap-2">
+                                                <i className="icon-base ti tabler-lock text-warning"></i> Cryptographic Hashes
+                                            </h6>
+                                            {report.hashes && Object.entries(report.hashes).map(([alg, h]) => (
+                                                <div key={alg} className="mb-3 border-bottom pb-2">
+                                                    <div className="d-flex justify-content-between align-items-center mb-1">
+                                                        <span className="fw-bold text-uppercase small text-body">{alg}</span>
+                                                    </div>
+                                                    <code className="d-block bg-label-secondary text-body p-2 rounded small text-break border">{h}</code>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Blockchain Verification */}
+                                <div className="col-12 col-lg-6">
+                                    <div className="card h-100 border-0 shadow-sm rounded-3">
+                                        <div className="card-body">
+                                            <h6 className="text-uppercase small fw-bold text-muted mb-3 d-flex align-items-center gap-2">
+                                                <i className="icon-base ti tabler-link text-primary"></i> Blockchain Anchoring
+                                            </h6>
+                                            {report.blockchain && report.blockchain.uploader ? (
+                                                <div className="d-flex flex-column h-100 justify-content-center gap-3">
+                                                    <div>
+                                                        <span className="d-block small text-uppercase text-muted fw-bold mb-1">Smart Contract Transaction</span>
+                                                        <code className="d-block bg-label-primary text-primary p-2 rounded small text-break border border-primary font-monospace">{report.blockchain.fileHash || 'Verified Hash'}</code>
+                                                    </div>
+                                                    <div className="row g-2 mt-1">
+                                                        <div className="col-12">
+                                                            <span className="d-block small text-muted d-block mb-1">Uploader Wallet Address</span>
+                                                            <div className="d-flex align-items-center gap-2">
+                                                                <i className="icon-base ti tabler-wallet text-muted"></i>
+                                                                <span className="fw-semibold font-monospace">{report.blockchain.uploader}</span>
+                                                            </div>
+                                                        </div>
+                                                        <div className="col-12 mt-3">
+                                                            <span className="d-block small text-muted mb-1">Network Timestamp</span>
+                                                            <span className="fw-medium">
+                                                                <i className="icon-base ti tabler-clock me-1 text-muted"></i>
+                                                                {new Date(report.blockchain.timestamp).toLocaleString()}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            ) : (
+                                                <div className="text-center py-5 h-100 d-flex flex-column justify-content-center">
+                                                    <i className="icon-base ti tabler-clock-x text-muted mb-3" style={{ fontSize: '3rem' }}></i>
+                                                    <p className="text-muted mb-0 fw-medium">No blockchain transaction verified</p>
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div className="d-print-none mt-4 text-center">
+                                <button className="btn btn-primary" onClick={() => window.print()}>
+                                    <i className="icon-base ti tabler-printer me-2"></i> Print Official Report
+                                </button>
+                            </div>
+
                         </div>
                     </div>
                     {/* Case Link Selection Offcanvas (Drawer) */}

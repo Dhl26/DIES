@@ -1340,5 +1340,280 @@
     "role": "Admin",
     "ip": "unknown",
     "evidenceHash": "22ccc08a6cbd42382099d0a44ae0ad867a2c16d408abaf75964eeb9b6f7a9f36"
+  },
+  {
+    "id": "e8bb600e-c485-4455-8fd4-b856991239fb",
+    "timestamp": "2026-04-05T16:18:24.688Z",
+    "action": "USER_LOGIN",
+    "username": "admin123",
+    "role": "Admin",
+    "ip": "::1"
+  },
+  {
+    "id": "9f1dc3ca-5375-4c18-803f-2b268e0033cc",
+    "timestamp": "2026-04-05T16:21:22.884Z",
+    "action": "CASE_UPDATED",
+    "username": "admin123",
+    "role": "Admin",
+    "ip": "unknown",
+    "caseId": "2b7c3cd5-3ec6-4d86-84fd-862b786b2493"
+  },
+  {
+    "id": "12c8ac1d-04c0-41ed-b5e1-27ea7db66d9a",
+    "timestamp": "2026-04-05T16:21:34.353Z",
+    "action": "EVIDENCE_VIEWED",
+    "username": "admin123",
+    "role": "Admin",
+    "ip": "unknown",
+    "evidenceHash": "22ccc08a6cbd42382099d0a44ae0ad867a2c16d408abaf75964eeb9b6f7a9f36"
+  },
+  {
+    "id": "2fdd88c6-cf79-4b10-ab2b-72385b86db63",
+    "timestamp": "2026-04-05T16:21:34.368Z",
+    "action": "EVIDENCE_VIEWED",
+    "username": "admin123",
+    "role": "Admin",
+    "ip": "unknown",
+    "evidenceHash": "22ccc08a6cbd42382099d0a44ae0ad867a2c16d408abaf75964eeb9b6f7a9f36"
+  },
+  {
+    "id": "29b2d227-440c-4057-b39d-b7298ec7e821",
+    "timestamp": "2026-04-05T16:21:37.118Z",
+    "action": "REPORT_GENERATED",
+    "username": "admin123",
+    "role": "Admin",
+    "ip": "unknown",
+    "evidenceHash": "22ccc08a6cbd42382099d0a44ae0ad867a2c16d408abaf75964eeb9b6f7a9f36"
+  },
+  {
+    "id": "6b476378-51b5-4513-aac9-376221e504e6",
+    "timestamp": "2026-04-05T16:21:37.948Z",
+    "action": "REPORT_GENERATED",
+    "username": "admin123",
+    "role": "Admin",
+    "ip": "unknown",
+    "evidenceHash": "22ccc08a6cbd42382099d0a44ae0ad867a2c16d408abaf75964eeb9b6f7a9f36"
+  },
+  {
+    "id": "e0c91dcf-ffed-4ecd-810b-6d3937ae9ca9",
+    "timestamp": "2026-04-05T16:21:38.513Z",
+    "action": "REPORT_GENERATED",
+    "username": "admin123",
+    "role": "Admin",
+    "ip": "unknown",
+    "evidenceHash": "22ccc08a6cbd42382099d0a44ae0ad867a2c16d408abaf75964eeb9b6f7a9f36"
+  },
+  {
+    "id": "c57ccfb0-140b-4059-9445-48418744be81",
+    "timestamp": "2026-04-05T16:21:39.298Z",
+    "action": "EVIDENCE_DOWNLOADED",
+    "username": "admin123",
+    "role": "Admin",
+    "ip": "unknown",
+    "evidenceHash": "22ccc08a6cbd42382099d0a44ae0ad867a2c16d408abaf75964eeb9b6f7a9f36"
+  },
+  {
+    "id": "032c4e8a-1236-4570-b332-18ad67723a14",
+    "timestamp": "2026-04-05T16:21:39.324Z",
+    "action": "EVIDENCE_VIEWED",
+    "username": "admin123",
+    "role": "Admin",
+    "ip": "unknown",
+    "evidenceHash": "22ccc08a6cbd42382099d0a44ae0ad867a2c16d408abaf75964eeb9b6f7a9f36"
+  },
+  {
+    "id": "845f77b9-57f0-401b-85b9-32ec4203d4e1",
+    "timestamp": "2026-04-05T16:23:26.142Z",
+    "action": "EVIDENCE_VIEWED",
+    "username": "admin123",
+    "role": "Admin",
+    "ip": "unknown",
+    "evidenceHash": "22ccc08a6cbd42382099d0a44ae0ad867a2c16d408abaf75964eeb9b6f7a9f36"
+  },
+  {
+    "id": "d21776ee-ec13-4d90-85a6-6cf5e666aa15",
+    "timestamp": "2026-04-05T16:23:26.159Z",
+    "action": "EVIDENCE_VIEWED",
+    "username": "admin123",
+    "role": "Admin",
+    "ip": "unknown",
+    "evidenceHash": "22ccc08a6cbd42382099d0a44ae0ad867a2c16d408abaf75964eeb9b6f7a9f36"
+  },
+  {
+    "id": "b563df8f-70fa-46f7-8dcb-fa08b1fd21dc",
+    "timestamp": "2026-04-05T16:27:54.640Z",
+    "action": "EVIDENCE_VIEWED",
+    "username": "admin123",
+    "role": "Admin",
+    "ip": "unknown",
+    "evidenceHash": "22ccc08a6cbd42382099d0a44ae0ad867a2c16d408abaf75964eeb9b6f7a9f36"
+  },
+  {
+    "id": "2820c3cc-c162-40de-984e-dc2d62a6be7e",
+    "timestamp": "2026-04-05T16:27:54.642Z",
+    "action": "REPORT_GENERATED",
+    "username": "admin123",
+    "role": "Admin",
+    "ip": "unknown",
+    "evidenceHash": "22ccc08a6cbd42382099d0a44ae0ad867a2c16d408abaf75964eeb9b6f7a9f36"
+  },
+  {
+    "id": "5e48abae-92f2-4771-a7fc-f7c12201a86c",
+    "timestamp": "2026-04-05T16:27:54.651Z",
+    "action": "EVIDENCE_VIEWED",
+    "username": "admin123",
+    "role": "Admin",
+    "ip": "unknown",
+    "evidenceHash": "22ccc08a6cbd42382099d0a44ae0ad867a2c16d408abaf75964eeb9b6f7a9f36"
+  },
+  {
+    "id": "95207248-ca35-44b3-b5cd-b35cb889e3d9",
+    "timestamp": "2026-04-05T16:27:54.653Z",
+    "action": "REPORT_GENERATED",
+    "username": "admin123",
+    "role": "Admin",
+    "ip": "unknown",
+    "evidenceHash": "22ccc08a6cbd42382099d0a44ae0ad867a2c16d408abaf75964eeb9b6f7a9f36"
+  },
+  {
+    "id": "90c6f5ce-99b1-4b21-adb4-405dcafad2ea",
+    "timestamp": "2026-04-05T16:28:05.971Z",
+    "action": "EVIDENCE_VIEWED",
+    "username": "admin123",
+    "role": "Admin",
+    "ip": "unknown",
+    "evidenceHash": "22ccc08a6cbd42382099d0a44ae0ad867a2c16d408abaf75964eeb9b6f7a9f36"
+  },
+  {
+    "id": "94be1a7a-66d4-4086-a5bb-fc0a4e2ab2fa",
+    "timestamp": "2026-04-05T16:28:05.974Z",
+    "action": "REPORT_GENERATED",
+    "username": "admin123",
+    "role": "Admin",
+    "ip": "unknown",
+    "evidenceHash": "22ccc08a6cbd42382099d0a44ae0ad867a2c16d408abaf75964eeb9b6f7a9f36"
+  },
+  {
+    "id": "738bdf0b-dc40-46b3-bdac-fcf154b3d0bd",
+    "timestamp": "2026-04-05T16:28:05.984Z",
+    "action": "EVIDENCE_VIEWED",
+    "username": "admin123",
+    "role": "Admin",
+    "ip": "unknown",
+    "evidenceHash": "22ccc08a6cbd42382099d0a44ae0ad867a2c16d408abaf75964eeb9b6f7a9f36"
+  },
+  {
+    "id": "80054350-4010-4d14-95de-5e4bb71ae77d",
+    "timestamp": "2026-04-05T16:28:05.988Z",
+    "action": "REPORT_GENERATED",
+    "username": "admin123",
+    "role": "Admin",
+    "ip": "unknown",
+    "evidenceHash": "22ccc08a6cbd42382099d0a44ae0ad867a2c16d408abaf75964eeb9b6f7a9f36"
+  },
+  {
+    "id": "bc9b962b-dacb-443a-a21e-c921ae6ed5bd",
+    "timestamp": "2026-04-05T16:29:46.862Z",
+    "action": "EVIDENCE_VIEWED",
+    "username": "admin123",
+    "role": "Admin",
+    "ip": "unknown",
+    "evidenceHash": "22ccc08a6cbd42382099d0a44ae0ad867a2c16d408abaf75964eeb9b6f7a9f36"
+  },
+  {
+    "id": "872c86b0-4b60-47bb-83be-90b911e4b23b",
+    "timestamp": "2026-04-05T16:29:46.864Z",
+    "action": "REPORT_GENERATED",
+    "username": "admin123",
+    "role": "Admin",
+    "ip": "unknown",
+    "evidenceHash": "22ccc08a6cbd42382099d0a44ae0ad867a2c16d408abaf75964eeb9b6f7a9f36"
+  },
+  {
+    "id": "e96da1d4-caf1-4ee1-b55d-995e2ba0f59b",
+    "timestamp": "2026-04-05T16:29:46.872Z",
+    "action": "EVIDENCE_VIEWED",
+    "username": "admin123",
+    "role": "Admin",
+    "ip": "unknown",
+    "evidenceHash": "22ccc08a6cbd42382099d0a44ae0ad867a2c16d408abaf75964eeb9b6f7a9f36"
+  },
+  {
+    "id": "1cf5f4c0-dcfa-44d4-85e1-d98210ef34ef",
+    "timestamp": "2026-04-05T16:29:46.874Z",
+    "action": "REPORT_GENERATED",
+    "username": "admin123",
+    "role": "Admin",
+    "ip": "unknown",
+    "evidenceHash": "22ccc08a6cbd42382099d0a44ae0ad867a2c16d408abaf75964eeb9b6f7a9f36"
+  },
+  {
+    "id": "ec80be0e-fbf0-4ccc-adb6-4fbe8bfa4722",
+    "timestamp": "2026-04-05T16:31:13.024Z",
+    "action": "USER_REGISTERED",
+    "username": "admin123",
+    "role": "Admin",
+    "ip": "::1",
+    "new_user": "Dev"
+  },
+  {
+    "id": "ff4b7ce9-55de-45dd-af1d-a0d2e91e7d7e",
+    "timestamp": "2026-04-05T16:31:47.613Z",
+    "action": "USER_LOGIN",
+    "username": "Dev",
+    "role": "Case Agent",
+    "ip": "::1"
+  },
+  {
+    "id": "ee7a3ee8-b9b9-4f7a-b488-698999a877fa",
+    "timestamp": "2026-04-05T16:32:02.863Z",
+    "action": "USER_LOGIN",
+    "username": "admin123",
+    "role": "Admin",
+    "ip": "::1"
+  },
+  {
+    "id": "161889b0-2e02-4650-ab34-54da49a89848",
+    "timestamp": "2026-04-05T16:32:15.882Z",
+    "action": "EVIDENCE_VIEWED",
+    "username": "admin123",
+    "role": "Admin",
+    "ip": "unknown",
+    "evidenceHash": "22ccc08a6cbd42382099d0a44ae0ad867a2c16d408abaf75964eeb9b6f7a9f36"
+  },
+  {
+    "id": "8ff22037-4bdc-4eef-9671-ad0255e8a123",
+    "timestamp": "2026-04-05T16:32:15.884Z",
+    "action": "REPORT_GENERATED",
+    "username": "admin123",
+    "role": "Admin",
+    "ip": "unknown",
+    "evidenceHash": "22ccc08a6cbd42382099d0a44ae0ad867a2c16d408abaf75964eeb9b6f7a9f36"
+  },
+  {
+    "id": "472ce1d1-df65-4704-bb3f-e7f4ccf1d5b7",
+    "timestamp": "2026-04-05T16:32:15.895Z",
+    "action": "EVIDENCE_VIEWED",
+    "username": "admin123",
+    "role": "Admin",
+    "ip": "unknown",
+    "evidenceHash": "22ccc08a6cbd42382099d0a44ae0ad867a2c16d408abaf75964eeb9b6f7a9f36"
+  },
+  {
+    "id": "85fbc559-f14c-4196-9eeb-a094c5bf40a9",
+    "timestamp": "2026-04-05T16:32:15.898Z",
+    "action": "REPORT_GENERATED",
+    "username": "admin123",
+    "role": "Admin",
+    "ip": "unknown",
+    "evidenceHash": "22ccc08a6cbd42382099d0a44ae0ad867a2c16d408abaf75964eeb9b6f7a9f36"
+  },
+  {
+    "id": "20e4a486-89f7-4489-a2a8-7de9b0ac47e4",
+    "timestamp": "2026-04-05T16:45:24.427Z",
+    "action": "USER_LOGIN",
+    "username": "admin123",
+    "role": "Admin",
+    "ip": "::1"
   }
 ]

@@ -1,0 +1,33 @@
+{
+  "Admin": [
+    "Dashboard",
+    "View Cases",
+    "Create Case",
+    "Close Case",
+    "Update Case",
+    "Upload Evidence",
+    "Download Evidence",
+    "Change Status",
+    "View Report",
+    "View Audit Logs",
+    "User Management",
+    "Verify Evidence"
+  ],
+  "Case Agent": [
+    "Dashboard",
+    "View Cases",
+    "Create Case",
+    "Update Case",
+    "Upload Evidence",
+    "Download Evidence",
+    "View Report",
+    "Verify Evidence"
+  ],
+  "Evidence Custodian": [
+    "Dashboard",
+    "View Cases",
+    "Download Evidence",
+    "Change Status",
+    "Verify Evidence"
+  ]
+}

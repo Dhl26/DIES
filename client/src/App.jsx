@@ -12,6 +12,7 @@ import CaseManagement from './components/CaseManagement';
 import AuditLog from './components/AuditLog';
 import CreateCase from './components/CreateCase';
 import CaseDetail from './components/CaseDetail';
+import UserAccess from './components/UserAccess';
 
 const ProtectedRoute = ({ children, roles }) => {
     const { user, loading } = useContext(AuthContext);
@@ -66,10 +67,10 @@ const Sidebar = () => {
                 </li>
                 {user.role === 'Admin' && (
                     <>
-                        <li className={`menu-item ${isActive('/register')}`}>
-                            <Link to="/register" className="menu-link">
+                        <li className={`menu-item ${isActive('/users') || isActive('/register')}`}>
+                            <Link to="/users" className="menu-link">
                                 <i className="menu-icon icon-base ti tabler-users"></i>
-                                <div>User Management</div>
+                                <div>User Access</div>
                             </Link>
                         </li>
                         <li className={`menu-item ${isActive('/audit')}`}>
@@ -91,7 +92,7 @@ const Topbar = () => {
     if (!user) return null;
 
     return (
-        <nav className="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme" id="layout-navbar">
+        <nav className="layout-navbar container-fluid navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme" id="layout-navbar">
             <div className="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
                 <a className="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
                     <i className="icon-base ti tabler-menu-2 icon-md"></i>
@@ -158,7 +159,7 @@ const LayoutWrapper = ({ children }) => {
 
     if (!user) {
         return (
-            <div className="container-xxl">
+            <div className="container-fluid">
                 {children}
             </div>
         );
@@ -171,11 +172,11 @@ const LayoutWrapper = ({ children }) => {
                 <div className="layout-page">
                     <Topbar />
                     <div className="content-wrapper">
-                        <div className="container-xxl flex-grow-1 container-p-y">
+                        <div className="container-fluid flex-grow-1 container-p-y">
                             {children}
                         </div>
                         <footer className="content-footer footer bg-footer-theme">
-                            <div className="container-xxl">
+                            <div className="container-fluid">
                                 <div className="footer-container d-flex align-items-center justify-content-between py-4 flex-md-row flex-column">
                                     <div className="text-body">
                                         © {new Date().getFullYear()}, DEIS: Digital Evidence Integrity System
@@ -204,6 +205,7 @@ function App() {
                     <Routes>
                         <Route path="/login" element={<Login />} />
                         <Route path="/register" element={<ProtectedRoute roles={['Admin']}><Register /></ProtectedRoute>} />
+                        <Route path="/users" element={<ProtectedRoute roles={['Admin']}><UserAccess /></ProtectedRoute>} />
                         <Route path="/verify" element={<VerifyEvidence />} />
                         <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
                         <Route path="/upload" element={<ProtectedRoute roles={['Case Agent', 'Admin']}><UploadEvidence /></ProtectedRoute>} />

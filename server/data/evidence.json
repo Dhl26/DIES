@@ -135,6 +135,13 @@
         "role": "Admin",
         "timestamp": "2026-03-26T17:28:22.459Z",
         "notes": "All hashes match — file intact"
+      },
+      {
+        "action": "DOWNLOADED",
+        "by": "admin123",
+        "role": "Admin",
+        "timestamp": "2026-04-05T16:21:39.297Z",
+        "notes": ""
       }
     ]
   },

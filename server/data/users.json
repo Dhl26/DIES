@@ -4,5 +4,11 @@
     "password": "$2b$10$0yUKR8O5FH7/PEgKCoPTzuFrq3xvs/lbZVoYn/YG8.NxGbx4sUVAW",
     "role": "Admin",
     "createdAt": "2026-03-25T18:44:12.117Z"
+  },
+  {
+    "username": "Dev",
+    "password": "$2b$10$awDf76uYJdHfeOz69hDUkOAsJge18tMkSUu9dvRf/askXEU2iKsx6",
+    "role": "Case Agent",
+    "createdAt": "2026-04-05T16:31:13.022Z"
   }
 ]
