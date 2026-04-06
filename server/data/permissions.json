@@ -15,13 +15,13 @@
   ],
   "Case Agent": [
     "Dashboard",
-    "View Cases",
+    "Verify Evidence",
     "Create Case",
+    "View Cases",
     "Update Case",
+    "Close Case",
     "Upload Evidence",
-    "Download Evidence",
-    "View Report",
-    "Verify Evidence"
+    "Change Status"
   ],
   "Evidence Custodian": [
     "Dashboard",

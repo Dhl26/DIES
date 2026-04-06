@@ -2,11 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 
-const ROLE_PERMISSIONS = {
-    'Case Agent': { upload: true, verify: true, ledger: true, cases: true, analyze: false, transport: false, legal: false, audit: false },
-    'Evidence Custodian': { upload: false, verify: true, ledger: true, cases: false, analyze: false, transport: false, legal: false, audit: false },
-    'Admin': { upload: true, verify: true, ledger: true, cases: true, analyze: true, transport: true, legal: true, audit: true },
-};
+
 
 
 const STATUS_COLORS = {
@@ -14,8 +10,7 @@ const STATUS_COLORS = {
 };
 
 const Dashboard = () => {
-    const { user } = useContext(AuthContext);
-    const perms = ROLE_PERMISSIONS[user?.role] || {};
+    const { user, userPerms } = useContext(AuthContext);
     const [stats, setStats] = useState(null);
 
 
@@ -26,11 +21,11 @@ const Dashboard = () => {
     }, [user]);
 
     const actions = [
-        { id: 'ledger', title: 'Evidence Ledger', desc: 'Browse, search, download, and manage all registered evidence files with full chain of custody.', icon: 'tabler-clipboard-list', color: 'primary', link: '/ledger', enabled: perms.ledger },
-        { id: 'upload', title: 'Register Evidence', desc: 'Upload new digital evidence with multi-hash fingerprinting (SHA-256 + SHA-1 + MD5) on blockchain.', icon: 'tabler-cloud-upload', color: 'success', link: '/upload', enabled: perms.upload },
-        { id: 'cases', title: 'Case Management', desc: 'Create investigation cases, set priorities, and link evidence items for organized tracking.', icon: 'tabler-folder-open', color: 'warning', link: '/cases', enabled: perms.cases },
-        { id: 'verify', title: 'Verify Integrity', desc: 'Compare file hashes against blockchain records. Drag & drop files for instant verification.', icon: 'tabler-shield-check', color: 'info', link: '/verify', enabled: perms.verify },
-        { id: 'audit', title: 'Audit Log', desc: 'Complete NIST-compliant activity log of all system actions and evidence interactions.', icon: 'tabler-list-check', color: 'secondary', link: '/audit', enabled: perms.audit },
+        { id: 'ledger', title: 'Evidence Ledger', desc: 'Browse, search, download, and manage all registered evidence files with full chain of custody.', icon: 'tabler-clipboard-list', color: 'primary', link: '/ledger', enabled: userPerms.includes('Download Evidence') || userPerms.includes('Verify Evidence') },
+        { id: 'upload', title: 'Register Evidence', desc: 'Upload new digital evidence with multi-hash fingerprinting (SHA-256 + SHA-1 + MD5) on blockchain.', icon: 'tabler-cloud-upload', color: 'success', link: '/upload', enabled: userPerms.includes('Upload Evidence') },
+        { id: 'cases', title: 'Case Management', desc: 'Create investigation cases, set priorities, and link evidence items for organized tracking.', icon: 'tabler-folder-open', color: 'warning', link: '/cases', enabled: userPerms.includes('View Cases') },
+        { id: 'verify', title: 'Verify Integrity', desc: 'Compare file hashes against blockchain records. Drag & drop files for instant verification.', icon: 'tabler-shield-check', color: 'info', link: '/verify', enabled: userPerms.includes('Verify Evidence') },
+        { id: 'audit', title: 'Audit Log', desc: 'Complete NIST-compliant activity log of all system actions and evidence interactions.', icon: 'tabler-list-check', color: 'secondary', link: '/audit', enabled: userPerms.includes('View Audit Logs') },
     ];
 
     return (

@@ -14,17 +14,24 @@ import CreateCase from './components/CreateCase';
 import CaseDetail from './components/CaseDetail';
 import UserAccess from './components/UserAccess';
 
-const ProtectedRoute = ({ children, roles }) => {
-    const { user, loading } = useContext(AuthContext);
+const ProtectedRoute = ({ children, requiredPerms, roles }) => {
+    const { user, loading, userPerms } = useContext(AuthContext);
     if (loading) return <div className="d-flex justify-content-center mt-5"><div className="spinner-border text-primary" role="status"></div></div>;
     if (!user) return <Navigate to="/login" />;
+    
     if (roles && !roles.includes(user.role)) return <Navigate to="/dashboard" />;
+
+    if (requiredPerms && requiredPerms.length > 0) {
+        const hasAccess = requiredPerms.some(perm => userPerms.includes(perm));
+        if (!hasAccess) return <Navigate to="/dashboard" />;
+    }
+
     return children;
 };
 
 // ── Sidebar Menu ──
 const Sidebar = () => {
-    const { user } = useContext(AuthContext);
+    const { user, userPerms } = useContext(AuthContext);
     const location = useLocation();
     if (!user) return null;
 
@@ -59,27 +66,29 @@ const Sidebar = () => {
                         <div>Dashboard</div>
                     </Link>
                 </li>
-                <li className={`menu-item ${isActive('/cases')}`}>
-                    <Link to="/cases" className="menu-link">
-                        <i className="menu-icon icon-base ti tabler-folder"></i>
-                        <div>Cases</div>
-                    </Link>
-                </li>
-                {user.role === 'Admin' && (
-                    <>
-                        <li className={`menu-item ${isActive('/users') || isActive('/register')}`}>
-                            <Link to="/users" className="menu-link">
-                                <i className="menu-icon icon-base ti tabler-users"></i>
-                                <div>User Access</div>
-                            </Link>
-                        </li>
+                {userPerms.includes('View Cases') && (
+                    <li className={`menu-item ${isActive('/cases')}`}>
+                        <Link to="/cases" className="menu-link">
+                            <i className="menu-icon icon-base ti tabler-folder"></i>
+                            <div>Cases</div>
+                        </Link>
+                    </li>
+                )}
+                {userPerms.includes('User Management') && (
+                    <li className={`menu-item ${isActive('/users') || isActive('/register')}`}>
+                        <Link to="/users" className="menu-link">
+                            <i className="menu-icon icon-base ti tabler-users"></i>
+                            <div>User Access</div>
+                        </Link>
+                    </li>
+                )}
+                {userPerms.includes('View Audit Logs') && (
                         <li className={`menu-item ${isActive('/audit')}`}>
                             <Link to="/audit" className="menu-link">
                                 <i className="menu-icon icon-base ti tabler-list-check"></i>
                                 <div>Audit Log</div>
                             </Link>
                         </li>
-                    </>
                 )}
             </ul>
         </aside>
@@ -99,12 +108,7 @@ const Topbar = () => {
                 </a>
             </div>
             <div className="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
-                <div className="navbar-nav align-items-center">
-                    <div className="nav-item d-flex align-items-center">
-                        <i className="icon-base ti tabler-search fs-4 lh-0"></i>
-                        <input type="text" className="form-control border-0 shadow-none bg-transparent" placeholder="Search..." aria-label="Search..." />
-                    </div>
-                </div>
+                
                 <ul className="navbar-nav flex-row align-items-center ms-auto">
                     <li className="nav-item navbar-dropdown dropdown-user dropdown">
                         <a className="nav-link dropdown-toggle hide-arrow p-0" href="javascript:void(0);" data-bs-toggle="dropdown">
@@ -204,17 +208,17 @@ function App() {
                 <LayoutWrapper>
                     <Routes>
                         <Route path="/login" element={<Login />} />
-                        <Route path="/register" element={<ProtectedRoute roles={['Admin']}><Register /></ProtectedRoute>} />
-                        <Route path="/users" element={<ProtectedRoute roles={['Admin']}><UserAccess /></ProtectedRoute>} />
+                        <Route path="/register" element={<ProtectedRoute requiredPerms={['User Management']}><Register /></ProtectedRoute>} />
+                        <Route path="/users" element={<ProtectedRoute requiredPerms={['User Management']}><UserAccess /></ProtectedRoute>} />
                         <Route path="/verify" element={<VerifyEvidence />} />
                         <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-                        <Route path="/upload" element={<ProtectedRoute roles={['Case Agent', 'Admin']}><UploadEvidence /></ProtectedRoute>} />
-                        <Route path="/ledger" element={<ProtectedRoute><EvidenceLedger /></ProtectedRoute>} />
-                        <Route path="/evidence/:hash" element={<ProtectedRoute><EvidenceDetail /></ProtectedRoute>} />
-                        <Route path="/cases" element={<ProtectedRoute><CaseManagement /></ProtectedRoute>} />
-                        <Route path="/cases/new" element={<ProtectedRoute roles={['Case Agent', 'Admin']}><CreateCase /></ProtectedRoute>} />
-                        <Route path="/cases/detail/:id" element={<ProtectedRoute><CaseDetail /></ProtectedRoute>} />
-                        <Route path="/audit" element={<ProtectedRoute roles={['Admin']}><AuditLog /></ProtectedRoute>} />
+                        <Route path="/upload" element={<ProtectedRoute requiredPerms={['Upload Evidence']}><UploadEvidence /></ProtectedRoute>} />
+                        <Route path="/ledger" element={<ProtectedRoute requiredPerms={['Download Evidence', 'Verify Evidence', 'Change Status']}><EvidenceLedger /></ProtectedRoute>} />
+                        <Route path="/evidence/:hash" element={<ProtectedRoute requiredPerms={['Download Evidence', 'Verify Evidence', 'Change Status']}><EvidenceDetail /></ProtectedRoute>} />
+                        <Route path="/cases" element={<ProtectedRoute requiredPerms={['View Cases']}><CaseManagement /></ProtectedRoute>} />
+                        <Route path="/cases/new" element={<ProtectedRoute requiredPerms={['Create Case']}><CreateCase /></ProtectedRoute>} />
+                        <Route path="/cases/detail/:id" element={<ProtectedRoute requiredPerms={['View Cases']}><CaseDetail /></ProtectedRoute>} />
+                        <Route path="/audit" element={<ProtectedRoute requiredPerms={['View Audit Logs']}><AuditLog /></ProtectedRoute>} />
                         <Route path="/" element={<Navigate to="/dashboard" />} />
                     </Routes>
                 </LayoutWrapper>

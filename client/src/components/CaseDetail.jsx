@@ -12,7 +12,7 @@ const PRIORITY_BADGE = {
 const CaseDetail = () => {
     const { id } = useParams();
     const navigate = useNavigate();
-    const { user } = useContext(AuthContext);
+    const { user, userPerms } = useContext(AuthContext);
 
     const [caseData, setCaseData] = useState(null);
     const [evidenceItems, setEvidenceItems] = useState([]);
@@ -60,8 +60,8 @@ const CaseDetail = () => {
         </div>
     );
 
-    const canUpload = ['Case Agent', 'Admin'].includes(user?.role);
-    const canManage = ['Case Agent', 'Admin'].includes(user?.role);
+    const canUpload = userPerms?.includes('Upload Evidence');
+    const canManage = userPerms?.includes('Close Case') || userPerms?.includes('Update Case');
 
     return (
         <div className="row">

@@ -4,6 +4,21 @@ import { AuthContext } from '../context/AuthContext';
 import Swal from 'sweetalert2';
 
 const AVAILABLE_PERMS = ['Dashboard', 'View Cases', 'Create Case', 'Close Case', 'Update Case', 'Upload Evidence', 'Download Evidence', 'Change Status', 'View Report', 'View Audit Logs', 'User Management', 'Verify Evidence'];
+
+const PERM_DEPENDENCIES = {
+    'Create Case': ['View Cases', 'Dashboard'],
+    'Update Case': ['View Cases', 'Dashboard'],
+    'Close Case': ['View Cases', 'Dashboard'],
+    'Upload Evidence': ['Dashboard'],
+    'Download Evidence': ['Dashboard'],
+    'Change Status': ['Dashboard'],
+    'View Report': ['Dashboard'],
+    'Verify Evidence': ['Dashboard'],
+    'View Cases': ['Dashboard'],
+    'View Audit Logs': ['Dashboard'],
+    'User Management': ['Dashboard']
+};
+
 const ROLES = ['Admin', 'Case Agent', 'Evidence Custodian'];
 
 const UserAccess = () => {
@@ -25,7 +40,23 @@ const UserAccess = () => {
                 if (usersRes.ok && permsRes.ok) {
                     const uData = await usersRes.json();
                     setUsers(uData);
-                    setPermissionsMap(await permsRes.json());
+                    const rawPerms = await permsRes.json();
+                    
+                    // Normalize existing permissions to ensure dependencies are met
+                    const normalizedPerms = {};
+                    Object.keys(rawPerms).forEach(roleKey => {
+                        const rolePerms = rawPerms[roleKey] || [];
+                        const expanded = new Set(rolePerms);
+                        rolePerms.forEach(p => {
+                            if (PERM_DEPENDENCIES[p]) {
+                                PERM_DEPENDENCIES[p].forEach(dep => expanded.add(dep));
+                            }
+                        });
+                        normalizedPerms[roleKey] = Array.from(expanded);
+                    });
+                    
+                    setPermissionsMap(normalizedPerms);
+                    
                     if (selectedUser) {
                         const updatedSelected = uData.find(u => u.username === selectedUser.username);
                         if (updatedSelected) setSelectedUser(updatedSelected);
@@ -72,9 +103,22 @@ const UserAccess = () => {
         setPermissionsMap(prev => {
             const rolePerms = prev[role] || [];
             if (rolePerms.includes(perm)) {
-                return { ...prev, [role]: rolePerms.filter(p => p !== perm) };
+                // Toggling OFF: also toggle off everything that depends on this permission
+                const permsToTurnOff = [perm];
+                Object.entries(PERM_DEPENDENCIES).forEach(([key, deps]) => {
+                    if (deps.includes(perm)) {
+                        permsToTurnOff.push(key);
+                    }
+                });
+                return { ...prev, [role]: rolePerms.filter(p => !permsToTurnOff.includes(p)) };
             } else {
-                return { ...prev, [role]: [...rolePerms, perm] };
+                // Toggling ON: auto-check dependencies like 'View Cases' for 'Create Case'
+                const permsToTurnOn = new Set([perm]);
+                if (PERM_DEPENDENCIES[perm]) {
+                    PERM_DEPENDENCIES[perm].forEach(dep => permsToTurnOn.add(dep));
+                }
+                const newPerms = new Set([...rolePerms, ...permsToTurnOn]);
+                return { ...prev, [role]: Array.from(newPerms) };
             }
         });
     };

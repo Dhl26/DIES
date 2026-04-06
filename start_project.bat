@@ -14,7 +14,7 @@ set /p ResetFabric="Do you want to reset and rebuild the Hyperledger Network? (Y
 if /i "%ResetFabric%"=="Y" (
     echo.
     echo [1/3] Pushing to WSL to rebuild Blockchain... (This takes a few minutes)
-    wsl -e bash -c "cd ~/fabric-network/fabric-samples/test-network && ./network.sh down && ./network.sh up createChannel -c mychannel -ca && ./network.sh deployCC -ccn evidence-contract -ccp ~/DIES/fabric-backend/chaincode-javascript/ -ccl javascript"
+    wsl -d Ubuntu -e bash -c "cd ~/fabric-network/fabric-samples/test-network && ./network.sh down && ./network.sh up createChannel -c mychannel -ca && ./network.sh deployCC -ccn evidence-contract -ccp ~/DIES/fabric-backend/chaincode-javascript/ -ccl javascript"
 ) ELSE (
     echo.
     echo [1/3] Skipping Blockchain deployment (assuming it is already running)...
@@ -22,11 +22,11 @@ if /i "%ResetFabric%"=="Y" (
 
 echo.
 echo [2/3] Starting Backend Server in a new WSL terminal...
-start "DEIS Server" wsl -e bash -c "export NVM_DIR=~/.nvm; source ~/.nvm/nvm.sh; cd ~/DIES/server; npm start; echo 'Backend crashed or stopped. Check errors above.'; exec bash"
+start "DEIS Server" wsl -d Ubuntu -e bash -c "export NVM_DIR=~/.nvm; source ~/.nvm/nvm.sh; nvm install 23; nvm use 23; cd ~/DIES/server; npm start; echo 'Backend crashed or stopped. Check errors above.'; exec bash"
 
 echo.
 echo [3/3] Starting Frontend Client in a new WSL terminal...
-start "DEIS Client" wsl -e bash -c "export NVM_DIR=~/.nvm; source ~/.nvm/nvm.sh; cd ~/DIES/client; npm run dev; echo 'Frontend crashed or stopped. Check errors above.'; exec bash"
+start "DEIS Client" wsl -d Ubuntu -e bash -c "export NVM_DIR=~/.nvm; source ~/.nvm/nvm.sh; nvm install 23; nvm use 23; cd ~/DIES/client; npm run dev; echo 'Frontend crashed or stopped. Check errors above.'; exec bash"
 
 echo.
 echo ==============================================================

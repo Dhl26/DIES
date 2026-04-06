@@ -10,7 +10,7 @@ const PRIORITY_BADGE = {
 };
 
 const CaseManagement = () => {
-    const { user, authFetch } = useContext(AuthContext);
+    const { user, userPerms, authFetch } = useContext(AuthContext);
     const [cases, setCases] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -38,7 +38,7 @@ const CaseManagement = () => {
                         <h4 className="mb-1">Case Management</h4>
                         <p className="text-muted mb-0">{cases.length} case{cases.length !== 1 ? 's' : ''} · Organize and track evidence by investigation</p>
                     </div>
-                    {['Case Agent', 'Admin'].includes(user?.role) && (
+                    {userPerms?.includes('Create Case') && (
                         <Link to="/cases/new" className="btn btn-primary">
                             <i className="icon-base ti tabler-plus me-2"></i>Create New Case
                         </Link>
@@ -54,7 +54,7 @@ const CaseManagement = () => {
                             <i className="icon-base ti tabler-folders text-muted mb-3" style={{ fontSize: '3rem' }}></i>
                             <h5 className="mb-2">No Cases Found</h5>
                             <p className="text-muted mb-4">Create your first investigation case to organize evidence and track chain of custody.</p>
-                            {['Case Agent', 'Admin'].includes(user?.role) && (
+                            {userPerms?.includes('Create Case') && (
                                 <Link to="/cases/new" className="btn btn-primary">
                                     <i className="icon-base ti tabler-plus me-2"></i>Create New Case
                                 </Link>

@@ -110,10 +110,11 @@ const VerifyEvidence = () => {
                                 </div>
                                 <div>
                                     <h5 className={`mb-1 text-${result.verified ? 'success' : 'danger'}`}>
-                                        {result.verified ? 'Evidence Verified' : 'Not Found'}
+                                        {result.verified ? (result.simulated ? 'Evidence Verified (Simulated)' : 'Evidence Verified') : 'Not Found'}
+                                        {result.simulated && <span className="badge bg-label-warning ms-2">Blockchain Offline</span>}
                                     </h5>
                                     <p className="text-muted mb-0 small">
-                                        {result.verified ? 'Blockchain record matches. Evidence is authentic.' : 'No blockchain record found for this hash.'}
+                                        {result.verified ? (result.simulated ? 'Validated against secure local records (Simulation Mode).' : 'Blockchain record matches. Evidence is authentic.') : 'No blockchain record found for this hash.'}
                                     </p>
                                 </div>
                             </div>

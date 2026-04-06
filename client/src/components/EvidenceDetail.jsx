@@ -26,7 +26,7 @@ const STATUS_BADGE = {
 
 const EvidenceDetail = () => {
     const { hash } = useParams();
-    const { user, authFetch } = useContext(AuthContext);
+    const { user, userPerms, authFetch } = useContext(AuthContext);
     const [evidence, setEvidence] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
@@ -53,7 +53,7 @@ const EvidenceDetail = () => {
     useEffect(() => { 
         fetchDetail(); 
         fetchCases(); 
-        if (['Case Agent', 'Admin'].includes(user?.role)) {
+        if (userPerms?.includes('View Report')) {
             handleGenerateReport();
         }
     }, [hash, user?.role]);
@@ -230,9 +230,9 @@ const EvidenceDetail = () => {
     };
 
     const formatBytes = (b) => !b ? '0 B' : b < 1024 ? b + ' B' : b < 1048576 ? (b / 1024).toFixed(1) + ' KB' : (b / 1048576).toFixed(1) + ' MB';
-    const canManage = ['Evidence Custodian', 'Admin'].includes(user?.role);
-    const canDownload = ['Case Agent', 'Evidence Custodian', 'Admin'].includes(user?.role);
-    const canReport = ['Case Agent', 'Admin'].includes(user?.role);
+    const canManage = userPerms?.includes('Change Status');
+    const canDownload = userPerms?.includes('Download Evidence');
+    const canReport = userPerms?.includes('View Report');
 
     if (loading) return (
         <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '50vh' }}>
@@ -460,17 +460,17 @@ const EvidenceDetail = () => {
                                     </div>
                                 )}
 
-                                {evidence?.custodyChain?.length > 0 ? (
+                                {evidence?.custodyLog?.length > 0 ? (
                                     <ul className="timeline pb-0 mb-0">
-                                        {[...evidence.custodyChain].reverse().map((event, i) => (
-                                            <li key={i} className={`timeline-item timeline-item-transparent ${i === evidence.custodyChain.length - 1 ? 'border-transparent' : ''}`}>
+                                        {[...evidence.custodyLog].reverse().map((event, i) => (
+                                            <li key={i} className={`timeline-item timeline-item-transparent ${i === evidence.custodyLog.length - 1 ? 'border-transparent' : ''}`}>
                                                 <span className="timeline-point timeline-point-primary"></span>
                                                 <div className="timeline-event">
                                                     <div className="timeline-header mb-1">
                                                         <h6 className="mb-0">{event.action?.replace(/_/g, ' ')}</h6>
                                                         <small className="text-muted">{new Date(event.timestamp).toLocaleString()}</small>
                                                     </div>
-                                                    <p className="mb-1 text-muted">{event.officer || event.handledBy}</p>
+                                                    <p className="mb-1 text-muted">{event.by || event.handledBy || event.officer}</p>
                                                     {event.notes && <small className="text-muted fst-italic">{event.notes}</small>}
                                                     {event.txHash && <div className="mt-1"><span className="badge bg-label-success">TX ✓</span></div>}
                                                 </div>
