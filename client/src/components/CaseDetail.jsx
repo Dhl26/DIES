@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
+import DataTable from 'react-data-table-component';
 import { AuthContext } from '../context/AuthContext';
+import Swal from 'sweetalert2';
 
 const PRIORITY_BADGE = {
     'Critical': 'bg-danger',
@@ -42,11 +44,47 @@ const CaseDetail = () => {
 
     const handleStatusToggle = async () => {
         const nextStatus = caseData.status === 'Open' ? 'Closed' : 'Open';
-        await fetch(`http://localhost:3001/cases/${id}`, {
-            method: 'PUT', headers,
-            body: JSON.stringify({ status: nextStatus }),
-        });
-        fetchData();
+        let payload = { status: nextStatus };
+
+        if (nextStatus === 'Closed') {
+            const { value: password } = await Swal.fire({
+                title: 'Close Case Verification',
+                text: 'Please enter your password to authorize closing this case. Once closed, no more evidence can be added.',
+                icon: 'warning',
+                input: 'password',
+                inputPlaceholder: 'Enter your account password',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#adb5bd',
+                confirmButtonText: 'Authorize & Close',
+                inputValidator: (value) => {
+                    if (!value) return 'Password is required!';
+                }
+            });
+
+            if (!password) return; // cancelled
+            payload.password = password;
+        }
+
+        try {
+            const res = await fetch(`http://localhost:3001/cases/${id}`, {
+                method: 'PUT', headers,
+                body: JSON.stringify(payload),
+            });
+
+            if (!res.ok) {
+                const data = await res.json();
+                Swal.fire('Failed', data.error || 'Failed to update case status', 'error');
+                return;
+            }
+
+            if (nextStatus === 'Closed') {
+                Swal.fire('Case Closed', 'The case has been securely closed and logged.', 'success');
+            }
+            fetchData();
+        } catch (err) {
+            Swal.fire('Error', 'Connection failed', 'error');
+        }
     };
 
     if (loading) return (
@@ -137,45 +175,65 @@ const CaseDetail = () => {
                             <p className="text-muted mb-4">Click "Add Evidence" above to register items to this case.</p>
                         </div>
                     ) : (
-                        <div className="table-responsive">
-                            <table className="table table-hover align-middle">
-                                <thead className="table-light">
-                                    <tr>
-                                        <th>File</th>
-                                        <th>Category</th>
-                                        <th>Status</th>
-                                        <th>Uploaded</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {evidenceItems.map(ev => (
-                                        <tr key={ev.id}>
-                                            <td>
-                                                <div className="d-flex align-items-center gap-2">
-                                                    <div className="badge bg-label-primary rounded p-2">
-                                                        <i className={`icon-base ti ${ev.mimeType?.startsWith('image/') ? 'tabler-photo' : ev.mimeType?.startsWith('video/') ? 'tabler-video' : 'tabler-file'} ti-sm`}></i>
-                                                    </div>
-                                                    <div>
-                                                        <Link to={`/evidence/${ev.hash}`} className="fw-semibold text-body d-block text-truncate" style={{ maxWidth: '260px' }}>
-                                                            {ev.fileName}
-                                                        </Link>
-                                                        <small className="text-muted text-truncate d-block" style={{ maxWidth: '260px' }}>{ev.metadata || '—'}</small>
-                                                    </div>
+                        <div className="card-body p-0">
+                            <DataTable
+                                columns={[
+                                    {
+                                        name: 'File',
+                                        selector: row => row.fileName,
+                                        cell: ev => (
+                                            <div className="d-flex align-items-center gap-2">
+                                                <div className="badge bg-label-primary rounded p-2">
+                                                    <i className={`icon-base ti ${ev.mimeType?.startsWith('image/') ? 'tabler-photo' : ev.mimeType?.startsWith('video/') ? 'tabler-video' : 'tabler-file'} ti-sm`}></i>
                                                 </div>
-                                            </td>
-                                            <td><span className="badge bg-label-secondary">{ev.category || 'Other'}</span></td>
-                                            <td><span className="badge bg-label-info">{ev.status}</span></td>
-                                            <td><small className="text-muted">{new Date(ev.timestamp).toLocaleDateString()}</small></td>
-                                            <td>
-                                                <Link to={`/evidence/${ev.hash}`} className="btn btn-sm btn-label-primary">
-                                                    <i className="icon-base ti tabler-eye me-1"></i>View
-                                                </Link>
-                                            </td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
+                                                <div>
+                                                    <Link to={`/evidence/${ev.hash}`} className="fw-semibold text-body d-block text-truncate" style={{ maxWidth: '260px' }}>
+                                                        {ev.fileName}
+                                                    </Link>
+                                                    <small className="text-muted text-truncate d-block" style={{ maxWidth: '260px' }}>{ev.metadata || '—'}</small>
+                                                </div>
+                                            </div>
+                                        ),
+                                        sortable: true
+                                    },
+                                    {
+                                        name: 'Category',
+                                        selector: row => row.category,
+                                        cell: ev => <span className="badge bg-label-secondary">{ev.category || 'Other'}</span>,
+                                        sortable: true
+                                    },
+                                    {
+                                        name: 'Status',
+                                        selector: row => row.status,
+                                        cell: ev => <span className="badge bg-label-info">{ev.status}</span>,
+                                        sortable: true
+                                    },
+                                    {
+                                        name: 'Uploaded',
+                                        selector: row => row.timestamp,
+                                        cell: ev => <small className="text-muted">{new Date(ev.timestamp).toLocaleDateString()}</small>,
+                                        sortable: true
+                                    },
+                                    {
+                                        name: 'Actions',
+                                        cell: ev => (
+                                            <Link to={`/evidence/${ev.hash}`} className="btn btn-sm btn-label-primary">
+                                                <i className="icon-base ti tabler-eye me-1"></i>View
+                                            </Link>
+                                        ),
+                                        button: true
+                                    }
+                                ]}
+                                data={evidenceItems}
+                                pagination
+                                highlightOnHover
+                                responsive
+                                customStyles={{
+                                    headCells: {
+                                        style: { fontWeight: 'bold', textTransform: 'uppercase', fontSize: '12px', color: '#6c757d' }
+                                    }
+                                }}
+                            />
                         </div>
                     )}
                 </div>

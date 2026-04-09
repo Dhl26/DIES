@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import DataTable from 'react-data-table-component';
 
 const VerifyEvidence = () => {
     const [hash, setHash] = useState('');
@@ -164,24 +165,25 @@ const VerifyEvidence = () => {
                                                     <h6 className="text-uppercase small fw-bold text-muted mb-3">
                                                         Chain of Custody <span className="badge bg-label-secondary ms-1">{result.local.custodyLog.length}</span>
                                                     </h6>
-                                                    <div className="table-responsive" style={{ maxHeight: '200px', overflowY: 'auto' }}>
-                                                        <table className="table table-sm table-striped mb-0">
-                                                            <thead>
-                                                                <tr><th>#</th><th>Action</th><th>By</th><th>Role</th><th>Date</th></tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                {result.local.custodyLog.map((e, i) => (
-                                                                    <tr key={i}>
-                                                                        <td className="text-muted small">{i + 1}</td>
-                                                                        <td className="small">{e.action?.replace(/_/g, ' ')}</td>
-                                                                        <td className="small">{e.by}</td>
-                                                                        <td><span className="badge bg-label-secondary">{e.role}</span></td>
-                                                                        <td className="text-muted small">{new Date(e.timestamp).toLocaleString()}</td>
-                                                                    </tr>
-                                                                ))}
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
+                                                        <DataTable
+                                                            columns={[
+                                                                { name: '#', selector: (row, i) => i + 1, width: '50px' },
+                                                                { name: 'Action', selector: row => row.action?.replace(/_/g, ' '), sortable: true },
+                                                                { name: 'By', selector: row => row.by, sortable: true },
+                                                                { name: 'Role', cell: row => <span className="badge bg-label-secondary">{row.role}</span>, sortable: true },
+                                                                { name: 'Date', selector: row => row.timestamp, cell: row => <span className="text-muted small">{new Date(row.timestamp).toLocaleString()}</span>, sortable: true }
+                                                            ]}
+                                                            data={result.local.custodyLog}
+                                                            pagination
+                                                            paginationPerPage={5}
+                                                            paginationRowsPerPageOptions={[5, 10, 20]}
+                                                            dense
+                                                            customStyles={{
+                                                                headCells: {
+                                                                    style: { fontWeight: 'bold', textTransform: 'uppercase', fontSize: '11px', color: '#6c757d' }
+                                                                }
+                                                            }}
+                                                        />
                                                 </div>
                                             )}
                                         </>

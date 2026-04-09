@@ -13,6 +13,8 @@ const CaseManagement = () => {
     const { user, userPerms, authFetch } = useContext(AuthContext);
     const [cases, setCases] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [currentPage, setCurrentPage] = useState(1);
+    const ITEMS_PER_PAGE = 9; // 3 per row layout
 
     useEffect(() => { fetchCases(); }, []);
 
@@ -28,6 +30,9 @@ const CaseManagement = () => {
             <div className="spinner-border text-primary" role="status"></div>
         </div>
     );
+
+    const totalPages = Math.ceil(cases.length / ITEMS_PER_PAGE);
+    const paginatedCases = cases.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE);
 
     return (
         <div className="row">
@@ -63,7 +68,8 @@ const CaseManagement = () => {
                     </div>
                 </div>
             ) : (
-                cases.map(c => (
+                <>
+                {paginatedCases.map(c => (
                     <div key={c.id} className="col-sm-6 col-xl-4 mb-4">
                         <div className="card h-100">
                             <div className="card-body d-flex flex-column">
@@ -97,6 +103,25 @@ const CaseManagement = () => {
                         </div>
                     </div>
                 ))
+                }
+                {totalPages > 1 && (
+                    <div className="col-12 d-flex justify-content-center mt-4">
+                        <ul className="pagination mb-0">
+                            <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+                                <button className="page-link" onClick={() => setCurrentPage(p => Math.max(1, p - 1))} disabled={currentPage === 1}><i className="ti tabler-chevron-left ti-xs"></i></button>
+                            </li>
+                            {[...Array(totalPages)].map((_, i) => (
+                                <li key={i} className={`page-item ${currentPage === i + 1 ? 'active' : ''}`}>
+                                    <button className="page-link" onClick={() => setCurrentPage(i + 1)}>{i + 1}</button>
+                                </li>
+                            ))}
+                            <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
+                                <button className="page-link" onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))} disabled={currentPage === totalPages}><i className="ti tabler-chevron-right ti-xs"></i></button>
+                            </li>
+                        </ul>
+                    </div>
+                )}
+                </>
             )}
         </div>
     );

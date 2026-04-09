@@ -26,6 +26,8 @@ const UserAccess = () => {
     const [users, setUsers] = useState([]);
     const [permissionsMap, setPermissionsMap] = useState({});
     const [selectedUser, setSelectedUser] = useState(null);
+    const [currentPage, setCurrentPage] = useState(1);
+    const USERS_PER_PAGE = 8;
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
     const [error, setError] = useState('');
@@ -148,6 +150,9 @@ const UserAccess = () => {
         </div>
     );
 
+    const totalPages = Math.ceil(users.length / USERS_PER_PAGE);
+    const paginatedUsers = users.slice((currentPage - 1) * USERS_PER_PAGE, currentPage * USERS_PER_PAGE);
+
     return (
         <div className="row">
             <div className="col-12 mb-4 d-flex justify-content-between align-items-center flex-wrap">
@@ -171,13 +176,13 @@ const UserAccess = () => {
             )}
 
             <div className="col-12 col-xl-5 mb-4">
-                <div className="card h-100 shadow-sm border-0">
+                <div className="card h-100 shadow-sm border-0 d-flex flex-column">
                     <div className="card-header border-bottom bg-light py-3">
                         <h5 className="card-title mb-0 text-primary fw-bold">System Directories</h5>
                     </div>
-                    <div className="card-body p-0">
-                        <div className="list-group list-group-flush">
-                            {users.map(u => (
+                    <div className="card-body p-0 flex-grow-1">
+                        <div className="list-group list-group-flush h-100">
+                            {paginatedUsers.map(u => (
                                 <button 
                                     key={u.username}
                                     type="button"
@@ -202,6 +207,24 @@ const UserAccess = () => {
                                 <div className="text-center py-5 text-muted">No users found.</div>
                             )}
                         </div>
+                        {totalPages > 1 && (
+                            <div className="card-footer border-top px-3 py-2 d-flex justify-content-between align-items-center bg-white mt-auto">
+                                <ul className="pagination pagination-sm mb-0">
+                                    <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+                                        <button className="page-link" onClick={() => setCurrentPage(p => Math.max(1, p - 1))} disabled={currentPage === 1}><i className="ti tabler-chevron-left ti-xs"></i></button>
+                                    </li>
+                                    {[...Array(totalPages)].map((_, i) => (
+                                        <li key={i} className={`page-item ${currentPage === i + 1 ? 'active' : ''}`}>
+                                            <button className="page-link" onClick={() => setCurrentPage(i + 1)}>{i + 1}</button>
+                                        </li>
+                                    ))}
+                                    <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
+                                        <button className="page-link" onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))} disabled={currentPage === totalPages}><i className="ti tabler-chevron-right ti-xs"></i></button>
+                                    </li>
+                                </ul>
+                                <small className="text-muted">pg {currentPage} / {totalPages}</small>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>

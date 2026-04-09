@@ -15,13 +15,8 @@
   ],
   "Case Agent": [
     "Dashboard",
-    "Verify Evidence",
-    "Create Case",
-    "View Cases",
-    "Update Case",
-    "Close Case",
-    "Upload Evidence",
-    "Change Status"
+    "View Audit Logs",
+    "View Cases"
   ],
   "Evidence Custodian": [
     "Dashboard",

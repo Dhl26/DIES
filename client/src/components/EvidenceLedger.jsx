@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
+import DataTable from 'react-data-table-component';
 
 const STATUS_BADGE = {
     'Collected': 'bg-label-primary', 'Processing': 'bg-label-warning',
@@ -59,6 +60,69 @@ const EvidenceLedger = () => {
     }
 
     const linkedCase = caseIdFilter ? cases.find(c => c.id === caseIdFilter) : null;
+
+    const columns = [
+        {
+            name: 'File',
+            selector: row => row.fileName,
+            cell: item => (
+                <div className="d-flex align-items-center gap-2">
+                    <div className="badge bg-label-secondary rounded p-1">
+                        <i className={`icon-base ti ${item.mimeType?.startsWith('image/') ? 'tabler-photo' : item.mimeType?.startsWith('video/') ? 'tabler-video' : 'tabler-file-description'} ti-sm`}></i>
+                    </div>
+                    <div>
+                        <div className="fw-semibold text-truncate" style={{ maxWidth: '200px' }}>{item.fileName}</div>
+                        <small className="text-muted">{formatBytes(item.fileSize)}</small>
+                    </div>
+                </div>
+            ),
+            sortable: true,
+            width: '250px'
+        },
+        {
+            name: 'Hash (SHA-256)',
+            selector: row => row.hash,
+            cell: item => <code className="small text-muted" style={{ fontSize: '10px' }}>{item.hash?.substring(0, 20)}…</code>,
+            sortable: false,
+        },
+        {
+            name: 'Status',
+            selector: row => row.status,
+            cell: item => <span className={`badge ${STATUS_BADGE[item.status] || 'bg-label-secondary'}`}>{item.status}</span>,
+            sortable: true,
+            width: '120px'
+        },
+        {
+            name: 'Category',
+            selector: row => row.category,
+            cell: item => <span className="text-muted small">{item.category || '–'}</span>,
+            sortable: true,
+            width: '120px'
+        },
+        {
+            name: 'Uploaded By',
+            selector: row => row.uploadedBy,
+            cell: item => <span className="text-muted small text-truncate" style={{maxWidth:'100px'}}>{item.uploadedBy}</span>,
+            sortable: true,
+        },
+        {
+            name: 'Date',
+            selector: row => row.timestamp,
+            cell: item => <span className="text-muted small">{new Date(item.timestamp).toLocaleDateString()}</span>,
+            sortable: true,
+            width: '100px'
+        },
+        {
+            name: '',
+            cell: item => (
+                <Link to={`/evidence/${item.hash}`} className="btn btn-sm btn-label-primary">
+                    <i className="icon-base ti tabler-eye me-1"></i>View
+                </Link>
+            ),
+            button: true,
+            width: '100px'
+        }
+    ];
 
     if (loading) return (
         <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '50vh' }}>
@@ -143,64 +207,33 @@ const EvidenceLedger = () => {
 
             {/* Evidence List */}
             <div className="col-12">
-                {filtered.length === 0 ? (
-                    <div className="card">
-                        <div className="card-body text-center py-5">
-                            <div className="badge bg-label-secondary rounded p-3 mb-3">
-                                <i className="icon-base ti tabler-inbox ti-lg"></i>
+                <div className="card">
+                    <DataTable
+                        columns={columns}
+                        data={filtered}
+                        pagination
+                        highlightOnHover
+                        responsive
+                        noHeader
+                        persistTableHead
+                        customStyles={{
+                            headCells: {
+                                style: { fontWeight: 'bold', textTransform: 'uppercase', fontSize: '12px', color: '#6c757d' }
+                            }
+                        }}
+                        noDataComponent={
+                            <div className="text-center py-5">
+                                <div className="badge bg-label-secondary rounded p-3 mb-3">
+                                    <i className="icon-base ti tabler-inbox ti-lg"></i>
+                                </div>
+                                <h5>No Evidence Records</h5>
+                                <p className="text-muted">
+                                    {search || statusFilter || categoryFilter ? 'Try adjusting your filters' : 'Upload your first evidence file to get started'}
+                                </p>
                             </div>
-                            <h5>No Evidence Records</h5>
-                            <p className="text-muted">
-                                {search || statusFilter || categoryFilter ? 'Try adjusting your filters' : 'Upload your first evidence file to get started'}
-                            </p>
-                        </div>
-                    </div>
-                ) : (
-                    <div className="card">
-                        <div className="table-responsive">
-                            <table className="table table-hover">
-                                <thead className="table-light">
-                                    <tr>
-                                        <th>File</th>
-                                        <th>Hash (SHA-256)</th>
-                                        <th>Status</th>
-                                        <th>Category</th>
-                                        <th>Uploaded By</th>
-                                        <th>Date</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {filtered.map(item => (
-                                        <tr key={item.hash}>
-                                            <td>
-                                                <div className="d-flex align-items-center gap-2">
-                                                    <div className="badge bg-label-secondary rounded p-1">
-                                                        <i className={`icon-base ti ${item.mimeType?.startsWith('image/') ? 'tabler-photo' : item.mimeType?.startsWith('video/') ? 'tabler-video' : 'tabler-file-description'} ti-sm`}></i>
-                                                    </div>
-                                                    <div>
-                                                        <div className="fw-semibold" style={{ maxWidth: '220px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{item.fileName}</div>
-                                                        <small className="text-muted">{formatBytes(item.fileSize)}</small>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td><code className="small text-muted" style={{ fontSize: '10px' }}>{item.hash?.substring(0, 20)}…</code></td>
-                                            <td><span className={`badge ${STATUS_BADGE[item.status] || 'bg-label-secondary'}`}>{item.status}</span></td>
-                                            <td><span className="text-muted small">{item.category || '–'}</span></td>
-                                            <td><span className="text-muted small">{item.uploadedBy}</span></td>
-                                            <td><span className="text-muted small">{new Date(item.timestamp).toLocaleDateString()}</span></td>
-                                            <td>
-                                                <Link to={`/evidence/${item.hash}`} className="btn btn-sm btn-label-primary">
-                                                    <i className="icon-base ti tabler-eye me-1"></i>View
-                                                </Link>
-                                            </td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                )}
+                        }
+                    />
+                </div>
             </div>
         </div>
     );

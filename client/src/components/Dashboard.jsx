@@ -12,8 +12,25 @@ const STATUS_COLORS = {
 const Dashboard = () => {
     const { user, userPerms } = useContext(AuthContext);
     const [stats, setStats] = useState(null);
+    const [infected, setInfected] = useState(null);
+    const [checkingIntegrity, setCheckingIntegrity] = useState(false);
+    const [showInfectedModal, setShowInfectedModal] = useState(false);
 
+    const checkIntegrity = () => {
+        setCheckingIntegrity(true);
+        fetch('http://localhost:3001/stats/integrity', {
+            headers: { 'Authorization': `Bearer ${user.token}` }
+        }).then(r => r.json()).then(data => {
+            setInfected(data.infected);
+            setCheckingIntegrity(false);
+        }).catch(() => setCheckingIntegrity(false));
+    };
 
+    useEffect(() => {
+        checkIntegrity();
+        const interval = setInterval(checkIntegrity, 60000);
+        return () => clearInterval(interval);
+    }, [user]);
     useEffect(() => {
         fetch('http://localhost:3001/stats', {
             headers: { 'Authorization': `Bearer ${user.token}` }
@@ -22,7 +39,6 @@ const Dashboard = () => {
 
     const actions = [
         { id: 'ledger', title: 'Evidence Ledger', desc: 'Browse, search, download, and manage all registered evidence files with full chain of custody.', icon: 'tabler-clipboard-list', color: 'primary', link: '/ledger', enabled: userPerms.includes('Download Evidence') || userPerms.includes('Verify Evidence') },
-        { id: 'upload', title: 'Register Evidence', desc: 'Upload new digital evidence with multi-hash fingerprinting (SHA-256 + SHA-1 + MD5) on blockchain.', icon: 'tabler-cloud-upload', color: 'success', link: '/upload', enabled: userPerms.includes('Upload Evidence') },
         { id: 'cases', title: 'Case Management', desc: 'Create investigation cases, set priorities, and link evidence items for organized tracking.', icon: 'tabler-folder-open', color: 'warning', link: '/cases', enabled: userPerms.includes('View Cases') },
         { id: 'verify', title: 'Verify Integrity', desc: 'Compare file hashes against blockchain records. Drag & drop files for instant verification.', icon: 'tabler-shield-check', color: 'info', link: '/verify', enabled: userPerms.includes('Verify Evidence') },
         { id: 'audit', title: 'Audit Log', desc: 'Complete NIST-compliant activity log of all system actions and evidence interactions.', icon: 'tabler-list-check', color: 'secondary', link: '/audit', enabled: userPerms.includes('View Audit Logs') },
@@ -72,9 +88,10 @@ const Dashboard = () => {
                         { label: 'Total Cases', value: stats?.cases?.total || 0, icon: 'tabler-folders', color: 'info' },
                         { label: 'Users', value: stats?.users?.total || 0, icon: 'tabler-users', color: 'success' },
                         { label: 'Blockchain', value: 'Connected', icon: 'tabler-link', color: 'primary' },
+                        { label: 'Infected Files', value: (infected === null || checkingIntegrity) ? <div className="spinner-border spinner-border-sm text-danger" role="status"></div> : infected.length, icon: 'tabler-virus', color: (infected && infected.length > 0) ? 'danger' : 'success', onClick: () => setShowInfectedModal(true) },
                     ].map((s, idx) => (
                         <div key={idx} className="col-sm-6 col-xl-2 col-md-4">
-                            <div className="card h-100">
+                            <div className="card h-100" onClick={s.onClick} style={{ cursor: s.onClick ? 'pointer' : 'default', transition: 'transform 0.2s' }} onMouseEnter={e => s.onClick && (e.currentTarget.style.transform = 'scale(1.05)')} onMouseLeave={e => s.onClick && (e.currentTarget.style.transform = '')}>
                                 <div className="card-body text-center">
                                     <div className={`badge rounded bg-label-${s.color} p-2 mb-3 mt-1`}>
                                         <i className={`icon-base ti ${s.icon} ti-md`}></i>
@@ -202,6 +219,61 @@ const Dashboard = () => {
                                         ))}
                                     </ul>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Infected Files Modal */}
+            {showInfectedModal && (
+                <div className="modal show d-block" tabIndex="-1" style={{ backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 1084 }}>
+                    <div className="modal-dialog modal-dialog-centered modal-lg">
+                        <div className="modal-content">
+                            <div className="modal-header bg-danger text-white">
+                                <h5 className="modal-title text-white">
+                                    <i className="icon-base ti tabler-virus me-2"></i> Integrity Violations Detected
+                                </h5>
+                                <button type="button" className="btn-close btn-close-white" onClick={() => setShowInfectedModal(false)}></button>
+                            </div>
+                            <div className="modal-body p-4">
+                                <div className="d-flex justify-content-between align-items-center mb-4">
+                                    <p className="mb-0">System-wide integrity scan identifies any files that have been modified or deleted from storage since they were originally uploaded and hashed to the blockchain.</p>
+                                    <button className="btn btn-sm btn-danger d-flex align-items-center" onClick={checkIntegrity} disabled={checkingIntegrity}>
+                                        {checkingIntegrity ? <span className="spinner-border spinner-border-sm me-2"></span> : <i className="icon-base ti tabler-refresh me-2"></i>}
+                                        Verify Again
+                                    </button>
+                                </div>
+                                {infected && infected.length > 0 ? (
+                                    <div className="table-responsive bg-label-danger rounded p-2" style={{ maxHeight: '400px', overflowY: 'auto' }}>
+                                        <table className="table table-borderless table-sm m-0">
+                                            <thead>
+                                                <tr>
+                                                    <th>File Name</th>
+                                                    <th>Issue</th>
+                                                    <th>Uploader</th>
+                                                    <th>Date</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {infected.map((f, i) => (
+                                                    <tr key={f.id || i} className="border-bottom border-danger">
+                                                        <td className="text-danger fw-bold">{f.fileName}</td>
+                                                        <td><span className="badge bg-danger">{f._integrityError}</span></td>
+                                                        <td>{f.uploadedBy}</td>
+                                                        <td>{new Date(f.timestamp).toLocaleDateString()}</td>
+                                                    </tr>
+                                                ))}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                ) : (
+                                    <div className="text-center p-5">
+                                        <i className="icon-base ti tabler-shield-check text-success display-4 mb-3"></i>
+                                        <h5>All evidence is secure</h5>
+                                        <p className="text-muted mb-0">No integrity violations were found across the platform.</p>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </div>

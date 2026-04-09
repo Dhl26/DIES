@@ -262,7 +262,7 @@ app.post('/cases', authenticate, checkPerms('Create Case'), (req, res) => {
     };
     cases.push(newCase);
     writeJSON(FILES.cases, cases);
-    logAudit('CASE_CREATED', req.user, { caseId: newCase.id, caseNumber: newCase.caseNumber });
+    logAudit('CASE_CREATED', req.user, { caseId: newCase.id, caseNumber: newCase.caseNumber, ip: req.ip });
 
     res.json(newCase);
 });
@@ -272,7 +272,17 @@ app.put('/cases/:id', authenticate, checkPerms('Update Case', 'Close Case'), (re
     const idx = cases.findIndex(c => c.id === req.params.id);
     if (idx === -1) return res.status(404).json({ error: 'Case not found' });
 
-    const { title, description, status, priority } = req.body;
+    const { title, description, status, priority, password } = req.body;
+
+    if (status === 'Closed') {
+        if (!password) return res.status(401).json({ error: 'Password required to close a case' });
+        const users = readJSON(FILES.users);
+        const currentUser = users.find(u => u.username === req.user.username);
+        if (!currentUser || !bcrypt.compareSync(password, currentUser.password)) {
+            return res.status(401).json({ error: 'Invalid password. Action aborted.' });
+        }
+    }
+
     if (title) cases[idx].title = title;
     if (description !== undefined) cases[idx].description = description;
     if (status) cases[idx].status = status;
@@ -280,7 +290,18 @@ app.put('/cases/:id', authenticate, checkPerms('Update Case', 'Close Case'), (re
     cases[idx].updatedAt = new Date().toISOString();
 
     writeJSON(FILES.cases, cases);
-    logAudit('CASE_UPDATED', req.user, { caseId: req.params.id });
+    const updatedFields = [];
+    if (title) updatedFields.push('Title');
+    if (description !== undefined) updatedFields.push('Description');
+    if (status) updatedFields.push('Status');
+    if (priority) updatedFields.push('Priority');
+
+    logAudit('CASE_UPDATED', req.user, { 
+        caseId: req.params.id, 
+        caseNumber: cases[idx].caseNumber,
+        updates: updatedFields.join(', '),
+        ip: req.ip 
+    });
     res.json(cases[idx]);
 });
 
@@ -308,7 +329,7 @@ app.post('/upload',
             try {
                 const existing = await contract.getEvidence(hashes.sha256);
                 if (existing && existing.timestamp && existing.timestamp.toNumber() > 0) {
-                    return res.json({ message: 'Evidence already registered', hash: hashes.sha256, transactionHash: 'existing', hashes });
+                    return res.status(409).json({ error: 'Duplicate Evidence: This file\'s hash is already registered on the blockchain.', hash: hashes.sha256, transactionHash: 'existing', hashes });
                 }
             } catch (e) { /* new evidence */ }
 
@@ -355,6 +376,7 @@ app.post('/upload',
                 fileSize: req.file.size,
                 caseId,
                 txHash: tx.hash,
+                ip: req.ip
             });
 
             res.json({
@@ -442,7 +464,7 @@ app.get('/evidence/:hash/download',
 
         entry.custodyLog.push({ action: 'DOWNLOADED', by: req.user.username, role: req.user.role, timestamp: new Date().toISOString(), notes: '' });
         writeJSON(FILES.evidence, registry);
-        logAudit('EVIDENCE_DOWNLOADED', req.user, { evidenceHash: req.params.hash });
+        logAudit('EVIDENCE_DOWNLOADED', req.user, { evidenceHash: req.params.hash, ip: req.ip });
 
         res.download(filePath, entry.fileName);
     }
@@ -474,7 +496,12 @@ app.put('/evidence/:hash/status',
             notes: `Status: ${oldStatus} → ${status}`,
         });
         writeJSON(FILES.evidence, registry);
-        logAudit('EVIDENCE_STATUS_CHANGED', req.user, { evidenceHash: req.params.hash, from: oldStatus, to: status });
+        logAudit('EVIDENCE_STATUS_CHANGED', req.user, { 
+            evidenceHash: req.params.hash, 
+            from: oldStatus, 
+            to: status,
+            ip: req.ip
+        });
 
         res.json({ message: `Status updated to ${status}` });
     }
@@ -506,7 +533,11 @@ app.put('/evidence/:hash/case',
             notes: caseId ? `Linked to case ${caseId}` : 'Unlinked from case',
         });
         writeJSON(FILES.evidence, registry);
-        logAudit('EVIDENCE_CASE_LINKED', req.user, { evidenceHash: req.params.hash, caseId });
+        logAudit('EVIDENCE_CASE_LINKED', req.user, { 
+            evidenceHash: req.params.hash, 
+            caseId,
+            ip: req.ip
+        });
 
         res.json({ message: 'Case link updated' });
     }
@@ -780,6 +811,35 @@ app.get('/stats', authenticate, (req, res) => {
         users: { total: users.length },
         recentActivity,
     });
+});
+
+// ═══════════════════════════════════════════════════════════
+//  ROUTES: SYSTEM INTEGRITY CHECK
+// ═══════════════════════════════════════════════════════════
+app.get('/stats/integrity', authenticate, (req, res) => {
+    const registry = readJSON(FILES.evidence);
+    const infected = [];
+
+    registry.forEach(entry => {
+        const filePath = path.join(UPLOADS_DIR, entry.storedAs);
+        if (!fs.existsSync(filePath)) {
+            infected.push({ ...entry, _integrityError: 'File missing from storage' });
+            return;
+        }
+        try {
+            const buffer = fs.readFileSync(filePath);
+            const currentHashes = computeHashes(buffer);
+            if (currentHashes.sha256 !== entry.hashes.sha256 ||
+                currentHashes.sha1 !== entry.hashes.sha1 ||
+                currentHashes.md5 !== entry.hashes.md5) {
+                infected.push({ ...entry, _integrityError: 'Hash mismatch' });
+            }
+        } catch (e) {
+            infected.push({ ...entry, _integrityError: 'File read error' });
+        }
+    });
+
+    res.json({ infected });
 });
 
 // ═══════════════════════════════════════════════════════════

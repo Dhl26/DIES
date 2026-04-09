@@ -1,13 +1,24 @@
 [
   {
-    "id": "f082677d-79d5-4315-82f7-81d49e6044c3",
-    "caseNumber": "CASE-MNM5SNQD",
-    "title": "demo1",
+    "id": "4255f273-4a21-4a78-a78d-c3a3600e2546",
+    "caseNumber": "CASE-MNPNEP9G",
+    "title": "NFSU ",
     "description": "",
     "priority": "Medium",
     "status": "Open",
     "createdBy": "admin123",
-    "createdAt": "2026-04-05T19:33:14.917Z",
-    "updatedAt": "2026-04-05T19:33:14.917Z"
+    "createdAt": "2026-04-08T06:09:35.332Z",
+    "updatedAt": "2026-04-08T06:09:35.332Z"
+  },
+  {
+    "id": "6948a7ad-0bba-4a7c-be45-f35d997b1a38",
+    "caseNumber": "CASE-MNPTZDBS",
+    "title": "NFSU goa",
+    "description": "",
+    "priority": "High",
+    "status": "Open",
+    "createdBy": "admin123",
+    "createdAt": "2026-04-08T09:13:37.336Z",
+    "updatedAt": "2026-04-08T09:13:37.336Z"
   }
 ]

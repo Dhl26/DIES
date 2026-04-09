@@ -25,6 +25,7 @@ class FabricContractWrapper {
         this.contract = null;
         this.network = null;
         this.isSimulated = false; // Graceful degradation for local UI testing
+        this.mockedState = new Set();
     }
 
     async init() {
@@ -72,7 +73,10 @@ class FabricContractWrapper {
     // --- Mimic the ethers.Contract interface used in index.js ---
 
     async getEvidence(hash) {
-        if (this.isSimulated) return { fileHash: hash, uploader: 'mock_uploader', timestamp: { toNumber: () => Date.now() / 1000 }, metadata: 'mock_metadata', rootCustodyNodeId: 'mock_node_id' };
+        if (this.isSimulated) {
+            if (!this.mockedState.has(hash)) return null;
+            return { fileHash: hash, uploader: 'mock_uploader', timestamp: { toNumber: () => Date.now() / 1000 }, metadata: 'mock_metadata', rootCustodyNodeId: 'mock_node_id' };
+        }
         
         try {
             const resultBytes = await this.contract.evaluateTransaction('getEvidence', hash);
@@ -95,6 +99,7 @@ class FabricContractWrapper {
     async registerEvidence(hash, metadata) {
         if (this.isSimulated) {
             console.log(`[DEIS][MOCK] Registering evidence ${hash} locally`);
+            this.mockedState.add(hash);
             return { wait: async () => {}, hash: crypto.randomBytes(32).toString('hex') };
         }
         try {

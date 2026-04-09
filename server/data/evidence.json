@@ -1,422 +1,126 @@
 [
   {
-    "id": "87a71a8e-7575-41b4-b520-18b7b7b4948c",
-    "hash": "12b131d750369410728fc6a586b99bdd4d1b47db1f1bfaee854f8ccb328bc4d1",
+    "id": "dc73aeed-c301-4d39-90e2-ddb26624ee95",
+    "hash": "8402024e8e13943743e82bceea301c770aef23725d47a5f1d8d9df30ae073edc",
     "hashes": {
-      "sha256": "12b131d750369410728fc6a586b99bdd4d1b47db1f1bfaee854f8ccb328bc4d1",
-      "sha1": "999b0480967c44b8fda9063949c04e989f320e12",
-      "md5": "171b594b16c7cb7f1a7d65a15ef8a17c"
+      "sha256": "8402024e8e13943743e82bceea301c770aef23725d47a5f1d8d9df30ae073edc",
+      "sha1": "36d7dfc9c82e5fe76f70ed0bbcf00486ebce7bfa",
+      "md5": "1af78e22c473d1752f2e7b128ae91d62"
     },
-    "fileName": "demo.jpg",
-    "fileSize": 1702744,
+    "fileName": "WhatsApp Image 2026-01-17 at 10.58.57 PM.jpeg",
+    "fileSize": 152216,
     "mimeType": "image/jpeg",
-    "storedAs": "12b131d750369410728fc6a586b99bdd4d1b47db1f1bfaee854f8ccb328bc4d1.jpg",
-    "metadata": "[HANDOVER FORM]\r\nAuthority: PO5\r\nFIR/Case No: CASE-MNM5SNQD\r\nDelivered By: N/A (ID: N/A) via Messenger\r\nDocs Included: None\r\nRemarks: None",
+    "storedAs": "8402024e8e13943743e82bceea301c770aef23725d47a5f1d8d9df30ae073edc.jpeg",
+    "metadata": "[HANDOVER FORM]\r\nAuthority: N/A\r\nFIR/Case No: CASE-MNPNEP9G\r\nDelivered By: N/A (ID: N/A) via Messenger\r\nDocs Included: None\r\nRemarks: None",
     "category": "Other",
     "tags": [],
-    "caseId": "f082677d-79d5-4315-82f7-81d49e6044c3",
-    "status": "Analyzed",
+    "caseId": "4255f273-4a21-4a78-a78d-c3a3600e2546",
+    "status": "Collected",
     "uploadedBy": "admin123",
     "uploaderRole": "Admin",
-    "transactionHash": "fda0d9a0372d569f816feb16fd001f21a41f36dde8467d847d8f3036e673e9ec",
-    "timestamp": "2026-04-05T19:37:27.552Z",
-    "notes": [
-      {
-        "id": "d38fec70-3289-42e9-abf0-effbc2ac1616",
-        "text": "zx",
-        "by": "admin123",
-        "role": "Admin",
-        "timestamp": "2026-04-05T19:39:12.751Z"
-      },
-      {
-        "id": "fbb40757-b122-4563-9f42-ed10c8868f11",
-        "text": "devv",
-        "by": "admin123",
-        "role": "Admin",
-        "timestamp": "2026-04-05T19:39:16.872Z"
-      }
-    ],
+    "transactionHash": "15f13e7f10cded8ada45e112337a42206c6491134768faff7870786e4f2461f4",
+    "timestamp": "2026-04-08T06:13:55.379Z",
+    "notes": [],
     "custodyLog": [
       {
         "action": "INITIAL_UPLOAD",
         "by": "admin123",
         "role": "Admin",
-        "timestamp": "2026-04-05T19:37:27.552Z",
-        "notes": "[HANDOVER FORM]\r\nAuthority: PO5\r\nFIR/Case No: CASE-MNM5SNQD\r\nDelivered By: N/A (ID: N/A) via Messenger\r\nDocs Included: None\r\nRemarks: None"
-      },
+        "timestamp": "2026-04-08T06:13:55.379Z",
+        "notes": "[HANDOVER FORM]\r\nAuthority: N/A\r\nFIR/Case No: CASE-MNPNEP9G\r\nDelivered By: N/A (ID: N/A) via Messenger\r\nDocs Included: None\r\nRemarks: None"
+      }
+    ]
+  },
+  {
+    "id": "cb9c3c16-8718-41d6-b4cf-f1815420b975",
+    "hash": "247cea3249e6c8f90d4a8ff4db1f73013175b99888c9e033e9ed499f53e73edb",
+    "hashes": {
+      "sha256": "247cea3249e6c8f90d4a8ff4db1f73013175b99888c9e033e9ed499f53e73edb",
+      "sha1": "122a41589592cbb0603c3f1cf459fd74080d0a0b",
+      "md5": "89cacde6e44eb537368c95c33f9b0567"
+    },
+    "fileName": "evidence.txt",
+    "fileSize": 4406,
+    "mimeType": "text/plain",
+    "storedAs": "247cea3249e6c8f90d4a8ff4db1f73013175b99888c9e033e9ed499f53e73edb.txt",
+    "metadata": "[HANDOVER FORM]\r\nAuthority: Goa Police\r\nFIR/Case No: CASE-MNPNEP9G\r\nDelivered By: Dev (ID: N/A) via Messenger\r\nDocs Included: Forwarding Letter, FIR Copy, Specimen Seal\r\nRemarks: None",
+    "category": "Document",
+    "tags": [
+      "Network log"
+    ],
+    "caseId": "4255f273-4a21-4a78-a78d-c3a3600e2546",
+    "status": "Collected",
+    "uploadedBy": "admin123",
+    "uploaderRole": "Admin",
+    "transactionHash": "89f79d18ab990f6d977914bbe010dd71a496f6ea0d22a23b1cf4e9a87e0a255f",
+    "timestamp": "2026-04-08T06:20:32.553Z",
+    "notes": [],
+    "custodyLog": [
       {
-        "action": "TRANSFERRED",
+        "action": "INITIAL_UPLOAD",
         "by": "admin123",
         "role": "Admin",
-        "timestamp": "2026-04-05T19:39:05.844Z",
-        "notes": ""
+        "timestamp": "2026-04-08T06:20:32.553Z",
+        "notes": "[HANDOVER FORM]\r\nAuthority: Goa Police\r\nFIR/Case No: CASE-MNPNEP9G\r\nDelivered By: Dev (ID: N/A) via Messenger\r\nDocs Included: Forwarding Letter, FIR Copy, Specimen Seal\r\nRemarks: None"
       },
       {
-        "action": "STORED",
+        "action": "INTEGRITY_CHECK",
         "by": "admin123",
         "role": "Admin",
-        "timestamp": "2026-04-05T19:39:24.451Z",
-        "notes": "ddddddddd"
+        "timestamp": "2026-04-08T06:20:42.497Z",
+        "notes": "All hashes match — verified on blockchain"
+      },
+      {
+        "action": "INTEGRITY_CHECK",
+        "by": "admin123",
+        "role": "Admin",
+        "timestamp": "2026-04-08T06:21:13.544Z",
+        "notes": "INTEGRITY VIOLATION DETECTED"
+      }
+    ]
+  },
+  {
+    "id": "6bcba43b-8bc1-4836-a356-581cd2f2e776",
+    "hash": "f2a641dbfc1ad8bd5df1607d79eba5361ecdf66e6cd0f607ad2ec2ff3d6ed3f9",
+    "hashes": {
+      "sha256": "f2a641dbfc1ad8bd5df1607d79eba5361ecdf66e6cd0f607ad2ec2ff3d6ed3f9",
+      "sha1": "3017cccc1aff41d500c9b3afb606f701a3b345eb",
+      "md5": "5ca895aeae91e860e83bfb4f90acd74f"
+    },
+    "fileName": "emblem.png",
+    "fileSize": 468372,
+    "mimeType": "image/png",
+    "storedAs": "f2a641dbfc1ad8bd5df1607d79eba5361ecdf66e6cd0f607ad2ec2ff3d6ed3f9.png",
+    "metadata": "[HANDOVER FORM]\r\nAuthority: Goa Police\r\nFIR/Case No: CASE-MNPTZDBS\r\nDelivered By: N/A (ID: N/A) via Messenger / By Hand\r\nDocs Included: Forwarding Letter\r\nRemarks: None",
+    "category": "Document",
+    "tags": [],
+    "caseId": "6948a7ad-0bba-4a7c-be45-f35d997b1a38",
+    "status": "Processing",
+    "uploadedBy": "admin123",
+    "uploaderRole": "Admin",
+    "transactionHash": "26c5fd6c3099a313ee752b1557ca1b3ed812fc75ffd451b446675b15dadd15a6",
+    "timestamp": "2026-04-08T09:14:44.418Z",
+    "notes": [],
+    "custodyLog": [
+      {
+        "action": "INITIAL_UPLOAD",
+        "by": "admin123",
+        "role": "Admin",
+        "timestamp": "2026-04-08T09:14:44.418Z",
+        "notes": "[HANDOVER FORM]\r\nAuthority: Goa Police\r\nFIR/Case No: CASE-MNPTZDBS\r\nDelivered By: N/A (ID: N/A) via Messenger / By Hand\r\nDocs Included: Forwarding Letter\r\nRemarks: None"
       },
       {
         "action": "STATUS_CHANGED",
         "by": "admin123",
         "role": "Admin",
-        "timestamp": "2026-04-05T19:39:44.131Z",
+        "timestamp": "2026-04-08T09:18:26.680Z",
         "notes": "Status: Collected → Processing"
       },
       {
         "action": "INTEGRITY_CHECK",
         "by": "admin123",
         "role": "Admin",
-        "timestamp": "2026-04-06T05:06:50.691Z",
-        "notes": "INTEGRITY VIOLATION DETECTED"
-      },
-      {
-        "action": "INTEGRITY_CHECK",
-        "by": "admin123",
-        "role": "Admin",
-        "timestamp": "2026-04-06T05:07:38.847Z",
-        "notes": "File intact but blockchain verify failed"
-      },
-      {
-        "action": "INTEGRITY_CHECK",
-        "by": "admin123",
-        "role": "Admin",
-        "timestamp": "2026-04-06T05:09:06.672Z",
-        "notes": "File intact but blockchain verify failed"
-      },
-      {
-        "action": "INTEGRITY_CHECK",
-        "by": "admin123",
-        "role": "Admin",
-        "timestamp": "2026-04-06T05:09:07.815Z",
-        "notes": "File intact but blockchain verify failed"
-      },
-      {
-        "action": "INTEGRITY_CHECK",
-        "by": "admin123",
-        "role": "Admin",
-        "timestamp": "2026-04-06T05:11:10.145Z",
-        "notes": "File intact but blockchain verify failed"
-      },
-      {
-        "action": "INTEGRITY_CHECK",
-        "by": "admin123",
-        "role": "Admin",
-        "timestamp": "2026-04-06T05:11:10.827Z",
-        "notes": "File intact but blockchain verify failed"
-      },
-      {
-        "action": "INTEGRITY_CHECK",
-        "by": "admin123",
-        "role": "Admin",
-        "timestamp": "2026-04-06T05:11:11.322Z",
-        "notes": "File intact but blockchain verify failed"
-      },
-      {
-        "action": "INTEGRITY_CHECK",
-        "by": "admin123",
-        "role": "Admin",
-        "timestamp": "2026-04-06T05:12:39.311Z",
-        "notes": "File intact but blockchain verify failed"
-      },
-      {
-        "action": "INTEGRITY_CHECK",
-        "by": "admin123",
-        "role": "Admin",
-        "timestamp": "2026-04-06T05:12:40.185Z",
-        "notes": "File intact but blockchain verify failed"
-      },
-      {
-        "action": "INTEGRITY_CHECK",
-        "by": "admin123",
-        "role": "Admin",
-        "timestamp": "2026-04-06T05:12:53.889Z",
-        "notes": "File intact but blockchain verify failed"
-      },
-      {
-        "action": "INTEGRITY_CHECK",
-        "by": "admin123",
-        "role": "Admin",
-        "timestamp": "2026-04-06T05:14:24.685Z",
-        "notes": "File intact but blockchain verify failed"
-      },
-      {
-        "action": "INTEGRITY_CHECK",
-        "by": "admin123",
-        "role": "Admin",
-        "timestamp": "2026-04-06T05:17:46.766Z",
-        "notes": "File intact but blockchain verify failed"
-      },
-      {
-        "action": "INTEGRITY_CHECK",
-        "by": "admin123",
-        "role": "Admin",
-        "timestamp": "2026-04-06T05:17:47.446Z",
-        "notes": "File intact but blockchain verify failed"
-      },
-      {
-        "action": "INTEGRITY_CHECK",
-        "by": "admin123",
-        "role": "Admin",
-        "timestamp": "2026-04-06T05:26:49.271Z",
-        "notes": "INTEGRITY VIOLATION DETECTED"
-      },
-      {
-        "action": "INTEGRITY_CHECK",
-        "by": "admin123",
-        "role": "Admin",
-        "timestamp": "2026-04-06T05:27:10.022Z",
-        "notes": "All hashes match — verified on blockchain"
-      },
-      {
-        "action": "INTEGRITY_CHECK",
-        "by": "Dev",
-        "role": "Case Agent",
-        "timestamp": "2026-04-06T05:28:43.518Z",
-        "notes": "All hashes match — verified on blockchain"
-      },
-      {
-        "action": "STATUS_CHANGED",
-        "by": "Dev",
-        "role": "Case Agent",
-        "timestamp": "2026-04-06T05:30:32.970Z",
-        "notes": "Status: Processing → Analyzed"
-      }
-    ]
-  },
-  {
-    "id": "2d0a64e7-a490-4438-87f9-753e0310f702",
-    "hash": "0a1f31e6a3d7cbd883e7705a86d2bbd46d422365db65792e7181708f8e365db8",
-    "hashes": {
-      "sha256": "0a1f31e6a3d7cbd883e7705a86d2bbd46d422365db65792e7181708f8e365db8",
-      "sha1": "9bcdb7513f185cfb2baf5e4697b4430488410c46",
-      "md5": "4a30a8ca6111ba1aa210191fbeb103c5"
-    },
-    "fileName": "image1663847374515.png",
-    "fileSize": 74020,
-    "mimeType": "image/png",
-    "storedAs": "0a1f31e6a3d7cbd883e7705a86d2bbd46d422365db65792e7181708f8e365db8.png",
-    "metadata": "[HANDOVER FORM]\r\nAuthority: PO4\r\nFIR/Case No: CASE-MNM5SNQD\r\nDelivered By: N/A (ID: 1233) via Messenger\r\nDocs Included: None\r\nRemarks: None",
-    "category": "Other",
-    "tags": [],
-    "caseId": "f082677d-79d5-4315-82f7-81d49e6044c3",
-    "status": "Collected",
-    "uploadedBy": "Dev",
-    "uploaderRole": "Case Agent",
-    "transactionHash": "825ec6ec91b9709cbc58e88d318554d1fa56d38acb7b8535bdc5dc4d2d3678af",
-    "timestamp": "2026-04-05T19:41:40.551Z",
-    "notes": [],
-    "custodyLog": [
-      {
-        "action": "INITIAL_UPLOAD",
-        "by": "Dev",
-        "role": "Case Agent",
-        "timestamp": "2026-04-05T19:41:40.551Z",
-        "notes": "[HANDOVER FORM]\r\nAuthority: PO4\r\nFIR/Case No: CASE-MNM5SNQD\r\nDelivered By: N/A (ID: 1233) via Messenger\r\nDocs Included: None\r\nRemarks: None"
-      },
-      {
-        "action": "INTEGRITY_CHECK",
-        "by": "admin123",
-        "role": "Admin",
-        "timestamp": "2026-04-06T05:18:40.544Z",
-        "notes": "File intact but blockchain verify failed"
-      },
-      {
-        "action": "INTEGRITY_CHECK",
-        "by": "admin123",
-        "role": "Admin",
-        "timestamp": "2026-04-06T05:20:39.017Z",
-        "notes": "File intact but blockchain verify failed"
-      },
-      {
-        "action": "INTEGRITY_CHECK",
-        "by": "admin123",
-        "role": "Admin",
-        "timestamp": "2026-04-06T05:20:39.663Z",
-        "notes": "File intact but blockchain verify failed"
-      },
-      {
-        "action": "INTEGRITY_CHECK",
-        "by": "admin123",
-        "role": "Admin",
-        "timestamp": "2026-04-06T05:20:40.152Z",
-        "notes": "File intact but blockchain verify failed"
-      },
-      {
-        "action": "INTEGRITY_CHECK",
-        "by": "admin123",
-        "role": "Admin",
-        "timestamp": "2026-04-06T05:20:40.540Z",
-        "notes": "File intact but blockchain verify failed"
-      },
-      {
-        "action": "INTEGRITY_CHECK",
-        "by": "admin123",
-        "role": "Admin",
-        "timestamp": "2026-04-06T05:20:40.845Z",
-        "notes": "File intact but blockchain verify failed"
-      },
-      {
-        "action": "INTEGRITY_CHECK",
-        "by": "admin123",
-        "role": "Admin",
-        "timestamp": "2026-04-06T05:20:41.054Z",
-        "notes": "File intact but blockchain verify failed"
-      },
-      {
-        "action": "INTEGRITY_CHECK",
-        "by": "admin123",
-        "role": "Admin",
-        "timestamp": "2026-04-06T05:20:41.311Z",
-        "notes": "File intact but blockchain verify failed"
-      },
-      {
-        "action": "INTEGRITY_CHECK",
-        "by": "admin123",
-        "role": "Admin",
-        "timestamp": "2026-04-06T05:20:41.528Z",
-        "notes": "File intact but blockchain verify failed"
-      },
-      {
-        "action": "INTEGRITY_CHECK",
-        "by": "admin123",
-        "role": "Admin",
-        "timestamp": "2026-04-06T05:20:58.002Z",
-        "notes": "File intact but blockchain verify failed"
-      },
-      {
-        "action": "INTEGRITY_CHECK",
-        "by": "admin123",
-        "role": "Admin",
-        "timestamp": "2026-04-06T05:20:58.968Z",
-        "notes": "File intact but blockchain verify failed"
-      },
-      {
-        "action": "INTEGRITY_CHECK",
-        "by": "admin123",
-        "role": "Admin",
-        "timestamp": "2026-04-06T05:21:12.941Z",
-        "notes": "File intact but blockchain verify failed"
-      },
-      {
-        "action": "INTEGRITY_CHECK",
-        "by": "admin123",
-        "role": "Admin",
-        "timestamp": "2026-04-06T05:21:13.429Z",
-        "notes": "File intact but blockchain verify failed"
-      },
-      {
-        "action": "INTEGRITY_CHECK",
-        "by": "admin123",
-        "role": "Admin",
-        "timestamp": "2026-04-06T05:21:13.867Z",
-        "notes": "File intact but blockchain verify failed"
-      },
-      {
-        "action": "INTEGRITY_CHECK",
-        "by": "admin123",
-        "role": "Admin",
-        "timestamp": "2026-04-06T05:21:19.556Z",
-        "notes": "File intact but blockchain verify failed"
-      },
-      {
-        "action": "INTEGRITY_CHECK",
-        "by": "admin123",
-        "role": "Admin",
-        "timestamp": "2026-04-06T05:22:55.833Z",
-        "notes": "File intact but blockchain verify failed"
-      },
-      {
-        "action": "INTEGRITY_CHECK",
-        "by": "admin123",
-        "role": "Admin",
-        "timestamp": "2026-04-06T05:22:56.474Z",
-        "notes": "File intact but blockchain verify failed"
-      },
-      {
-        "action": "INTEGRITY_CHECK",
-        "by": "admin123",
-        "role": "Admin",
-        "timestamp": "2026-04-06T05:23:42.202Z",
-        "notes": "All hashes match — verified on blockchain"
-      },
-      {
-        "action": "INTEGRITY_CHECK",
-        "by": "admin123",
-        "role": "Admin",
-        "timestamp": "2026-04-06T05:24:58.374Z",
-        "notes": "All hashes match — verified on blockchain"
-      },
-      {
-        "action": "INTEGRITY_CHECK",
-        "by": "admin123",
-        "role": "Admin",
-        "timestamp": "2026-04-06T05:25:14.805Z",
-        "notes": "All hashes match — verified on blockchain"
-      },
-      {
-        "action": "INTEGRITY_CHECK",
-        "by": "admin123",
-        "role": "Admin",
-        "timestamp": "2026-04-06T05:25:15.795Z",
-        "notes": "All hashes match — verified on blockchain"
-      },
-      {
-        "action": "INTEGRITY_CHECK",
-        "by": "admin123",
-        "role": "Admin",
-        "timestamp": "2026-04-06T05:25:16.234Z",
-        "notes": "All hashes match — verified on blockchain"
-      },
-      {
-        "action": "INTEGRITY_CHECK",
-        "by": "admin123",
-        "role": "Admin",
-        "timestamp": "2026-04-06T05:25:16.659Z",
-        "notes": "All hashes match — verified on blockchain"
-      },
-      {
-        "action": "INTEGRITY_CHECK",
-        "by": "admin123",
-        "role": "Admin",
-        "timestamp": "2026-04-06T05:25:17.341Z",
-        "notes": "All hashes match — verified on blockchain"
-      },
-      {
-        "action": "INTEGRITY_CHECK",
-        "by": "admin123",
-        "role": "Admin",
-        "timestamp": "2026-04-06T05:25:17.674Z",
-        "notes": "All hashes match — verified on blockchain"
-      },
-      {
-        "action": "INTEGRITY_CHECK",
-        "by": "admin123",
-        "role": "Admin",
-        "timestamp": "2026-04-06T05:25:18.137Z",
-        "notes": "All hashes match — verified on blockchain"
-      },
-      {
-        "action": "INTEGRITY_CHECK",
-        "by": "admin123",
-        "role": "Admin",
-        "timestamp": "2026-04-06T05:25:18.474Z",
-        "notes": "All hashes match — verified on blockchain"
-      },
-      {
-        "action": "INTEGRITY_CHECK",
-        "by": "admin123",
-        "role": "Admin",
-        "timestamp": "2026-04-06T05:25:30.202Z",
-        "notes": "All hashes match — verified on blockchain"
-      },
-      {
-        "action": "INTEGRITY_CHECK",
-        "by": "admin123",
-        "role": "Admin",
-        "timestamp": "2026-04-06T05:25:30.895Z",
+        "timestamp": "2026-04-08T09:18:35.475Z",
         "notes": "All hashes match — verified on blockchain"
       }
     ]

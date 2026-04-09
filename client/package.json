@@ -10,9 +10,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@esbuild/linux-x64": "^0.27.7",
+    "@rollup/rollup-linux-x64-gnu": "^4.34.8",
     "react": "^19.2.0",
+    "react-data-table-component": "^7.7.0",
     "react-dom": "^19.2.0",
     "react-router-dom": "^7.13.0",
+    "styled-components": "^6.3.12",
     "sweetalert2": "^11.26.24"
   },
   "devDependencies": {
